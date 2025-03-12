@@ -1,6 +1,6 @@
 <p>Please login using username and password:</p>
-<form>
-<p>Username: <input mat-input type="text"></p>
-<p>Password: <input mat-input type="password"></p>
-<button mat-button type="submit">Login</button>
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+  <p>Username: <input mat-input type="text" name="username" ngModel required></p>
+  <p>Password: <input mat-input type="password" name="password" ngModel required></p>
+  <button mat-button type="submit" [disabled]="!loginForm.valid">Login</button>
 </form>
