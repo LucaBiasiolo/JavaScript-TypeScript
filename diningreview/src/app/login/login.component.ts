@@ -12,18 +12,18 @@ import { MatButton } from '@angular/material/button';
 export class LoginComponent implements OnInit{
 
   loggedIn: boolean = false;
-  loginForm!: FormGroup;
+  //loginForm!: FormGroup;
   loginFormReactive!: FormGroup
 
   constructor(private userService: UserService, private formBuilder: FormBuilder){}
 
-  onSubmit(form: NgForm){
+  /*onSubmit(form: NgForm){
     this.userService.login(form.value.username, form.value.password).subscribe(
       (loggedIn) =>{
         this.loggedIn = loggedIn;
       }
     )
-  }
+  }*/
 
   ngOnInit(): void {
     this.loginFormReactive = this.formBuilder.group({
