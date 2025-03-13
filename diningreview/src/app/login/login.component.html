@@ -11,7 +11,13 @@
 
 <!--Reactive form version-->
 <form [formGroup]="loginFormReactive" (ngSubmit)="onSubmitReactive()">
-  <p>Username: <input mat-input type="text" name="username" formControlName="username"></p>
-  <p>Password: <input mat-input type="password" name="password" formControlName="password"></p>
-  <button mat-button type="submit" [disabled]="!loginFormReactive.valid">Login</button>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput type="text" name="username" formControlName="username">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" name="password" formControlName="password">
+  </mat-form-field>
+  <button mat-flat-button type="submit" [disabled]="!loginFormReactive.valid">Login</button>
 </form>
