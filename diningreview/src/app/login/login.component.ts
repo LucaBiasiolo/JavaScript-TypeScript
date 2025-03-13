@@ -8,25 +8,16 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, MatButton, MatFormFieldModule, MatInputModule,ReactiveFormsModule, RouterModule],
+  imports: [MatButton, MatFormFieldModule, MatInputModule,ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
 
   loggedIn: boolean = false;
-  //loginForm!: FormGroup;
   loginFormReactive!: FormGroup
 
   constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router){}
-
-  /*onSubmit(form: NgForm){
-    this.userService.login(form.value.username, form.value.password).subscribe(
-      (loggedIn) =>{
-        this.loggedIn = loggedIn;
-      }
-    )
-  }*/
 
   ngOnInit(): void {
     this.loginFormReactive = this.formBuilder.group({
