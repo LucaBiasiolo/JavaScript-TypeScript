@@ -1,0 +1,9 @@
+/* filepath: c:\Users\acer\Desktop\Programmazione\JavaScript-TypeScript\diningreview\src\app\app.component.css */
+a {
+    text-decoration: none;
+    color: #3f51b5; /* Default blue color of Angular Material */
+}
+
+a:visited {
+    color: #3f51b5; /* Ensure visited links have the same color */
+}
