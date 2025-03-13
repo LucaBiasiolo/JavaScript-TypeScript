@@ -1,1 +1,26 @@
-<p>create-user works!</p>
+<form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" name="username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" name="password" formControlName="password">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>City</mat-label>
+        <input matInput type="text" name="city" formControlName="city">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Zipcode</mat-label>
+        <input matInput type="text" name="zipcode" formControlName="zipcode">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>State</mat-label>
+        <input matInput type="text" name="state" formControlName="state">
+    </mat-form-field>
+    <mat-checkbox [disabled]="false" name="interestPeanutsAllergy" formControlName="interestPeanutsAllergy">Interest in peanuts allergy</mat-checkbox>
+    <mat-checkbox [disabled]="false" name="interestEggAllergy" formControlName="interestEggAllergy">Interest in egg allergy</mat-checkbox>
+    <mat-checkbox [disabled]="false" name="interestDairyAllergy" formControlName="interestDairyAllergy">Interest in dairy allergy</mat-checkbox>
+    <button mat-flat-button type="submit" [disabled]="!createUserForm.valid">Create User</button>
+</form>

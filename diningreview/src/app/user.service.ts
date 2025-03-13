@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { IUser } from './interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +22,9 @@ export class UserService {
        return response != null;
       })
     )
+  }
+
+  createUser(newUser: IUser) {
+    return this.http.post('http://localhost:8080/dining-review/users', newUser);
   }
 }
