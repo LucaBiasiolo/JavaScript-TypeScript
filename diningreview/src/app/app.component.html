@@ -1,6 +1,4 @@
-<h1>Angular Dining Review webapp</h1>
-@if (!loggedIn) {
-    <app-login></app-login>
-} @else {
-    <router-outlet></router-outlet>
-}
+<h1><a [routerLink]="['']">Angular Dining Review webapp</a></h1>
+<button mat-button type="button" [routerLink]="['/login']">Sign in</button>
+<button mat-button type="button" [routerLink]="['/signup']">Sign up</button>
+<router-outlet></router-outlet>
