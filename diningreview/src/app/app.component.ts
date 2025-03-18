@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { UserService } from './user.service';
+import { RestaurantListComponent } from "./restaurant-list/restaurant-list.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterModule],
+  imports: [RouterOutlet, RouterModule, RestaurantListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
