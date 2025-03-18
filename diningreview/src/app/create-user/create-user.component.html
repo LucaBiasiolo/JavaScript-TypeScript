@@ -13,14 +13,14 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Zipcode</mat-label>
-        <input matInput type="text" name="zipcode" formControlName="zipcode">
+        <input matInput type="text" name="zipCode" formControlName="zipCode">
     </mat-form-field>
     <mat-form-field>
         <mat-label>State</mat-label>
         <input matInput type="text" name="state" formControlName="state">
     </mat-form-field>
-    <mat-checkbox [disabled]="false" name="interestPeanutsAllergy" formControlName="interestPeanutsAllergy">Interest in peanuts allergy</mat-checkbox>
-    <mat-checkbox [disabled]="false" name="interestEggAllergy" formControlName="interestEggAllergy">Interest in egg allergy</mat-checkbox>
-    <mat-checkbox [disabled]="false" name="interestDairyAllergy" formControlName="interestDairyAllergy">Interest in dairy allergy</mat-checkbox>
-    <button mat-flat-button type="submit" [disabled]="!createUserForm.valid">Create User</button>
+    <mat-checkbox [checked]="true" name="interestPeanutAllergy" formControlName="interestPeanutAllergy">Interest in peanuts allergy</mat-checkbox>
+    <mat-checkbox [checked]="true" name="interestEggAllergy" formControlName="interestEggAllergy">Interest in egg allergy</mat-checkbox>
+    <mat-checkbox [checked]="true" name="interestDairyAllergy" formControlName="interestDairyAllergy">Interest in dairy allergy</mat-checkbox>
+    <button mat-flat-button type="submit">Create User</button>
 </form>
