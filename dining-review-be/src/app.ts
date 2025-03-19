@@ -3,8 +3,9 @@ import db from './sqlite';
 
 const app = express();
 const port = 8080;
+const baseUrl = '/dining-review'
 
-app.get('/users', (req,res) =>{
+app.get(`${baseUrl}/users`, (req,res) =>{
   db.all("select * from users", (err, rows) =>{
     if (err){
       res.status(500).send('Database error');
@@ -14,7 +15,7 @@ app.get('/users', (req,res) =>{
   })
 })
 
-app.get('/restaurants', (req,res) =>{
+app.get(`${baseUrl}/restaurants`, (req,res) =>{
   db.all("select * from restaurants", (err, rows) =>{
     if (err){
       res.status(500).send('Database error');
