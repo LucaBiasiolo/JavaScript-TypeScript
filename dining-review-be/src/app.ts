@@ -1,4 +1,6 @@
 import express from 'express';
+import db from './sqlite';
+
 const app = express();
 const port = 8080;
 
@@ -6,16 +8,14 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.post('/', (req, res) =>{
-  res.send('Test POST request from client');
-})
-
-app.put('/', (req, res) =>{
-  res.send('Test PUT request from client');
-})
-
-app.delete('/', (req, res) =>{
-  res.send('Test DELETE request from client');
+app.get('/db-test', (req,res) =>{
+  db.all("select * from users", (err, rows) =>{
+    if (err){
+      res.status(500).send('Database error');
+    } else{
+      res.json(rows);
+    }
+  })
 })
 
 app.use(express.static('public'))
