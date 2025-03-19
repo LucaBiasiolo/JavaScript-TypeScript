@@ -3,9 +3,9 @@ import db from './sqlite';
 
 const app = express();
 const port = 8080;
-const baseUrl = '/dining-review'
+const router = express.Router();
 
-app.get(`${baseUrl}/users`, (req,res) =>{
+router.get(`/users`, (req,res) =>{
   db.all("select * from users", (err, rows) =>{
     if (err){
       res.status(500).send('Database error');
@@ -15,7 +15,7 @@ app.get(`${baseUrl}/users`, (req,res) =>{
   })
 })
 
-app.get(`${baseUrl}/restaurants`, (req,res) =>{
+router.get(`/restaurants`, (req,res) =>{
   db.all("select * from restaurants", (err, rows) =>{
     if (err){
       res.status(500).send('Database error');
@@ -26,6 +26,8 @@ app.get(`${baseUrl}/restaurants`, (req,res) =>{
 })
 
 app.use(express.static('public'))
+
+app.use('/dining-review', router)
 
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
