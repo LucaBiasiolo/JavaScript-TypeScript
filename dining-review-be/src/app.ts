@@ -4,9 +4,12 @@ import {User, AppDataSource, Restaurant } from './typeorm';
 const app = express();
 const port = 8080;
 const router = express.Router();
+const userRepository = AppDataSource.getRepository(User)
+const restaurantRepository = AppDataSource.getRepository(Restaurant)
+
+app.use(express.json())
 
 router.get(`/users`, (req,res) =>{
-  const userRepository = AppDataSource.getRepository(User)
 
   userRepository.find().then((users) =>{  
     res.status(200);
@@ -16,14 +19,34 @@ router.get(`/users`, (req,res) =>{
   })
 })
 
+router.post('/users', (req, res) =>{
+  console.log('Request body: ' + JSON.stringify(req.body))
+  userRepository.save(req.body).then( () =>{
+    console.log('User saved correctly')
+    res.status(200).send();
+  }, (reason) =>{
+    console.log(reason)
+    res.status(500).send();
+  })
+})
+
 router.get(`/restaurants`, (req,res) =>{
-  const restaurantRepository = AppDataSource.getRepository(Restaurant)
 
   restaurantRepository.find().then((restaurants) =>{
     res.status(200)
     res.json(restaurants)
   }, (error) =>{
     console.log(error)
+  })
+})
+
+router.post('/restaurants', (req,res) =>{
+  restaurantRepository.save(req.body).then(() =>{
+    console.log('Restaurant saved correctly')
+    res.status(200).send();
+  }, (reason) =>{
+    console.error('Error during saving of new restaurant: ' + reason)
+    res.status(500).send();
   })
 })
 

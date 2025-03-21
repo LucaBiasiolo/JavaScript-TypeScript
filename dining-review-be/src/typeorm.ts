@@ -20,20 +20,20 @@ export class User {
     @Column()
     state: string
 
-    @Column()
+    @Column({name: 'zip_code'})
     zipcode: number
 
-    @Column()
-    interest_peanut_allergy: boolean
+    @Column({name: 'interest_peanut_allergy'})
+    interestPeanutAllergy: boolean
 
-    @Column()
-    interest_egg_allergy: boolean
+    @Column({name: 'interst_egg_allergy'})
+    interestEggAllergy: boolean
 
-    @Column()
-    interest_dairy_allergy: boolean
+    @Column({name: 'interest_dairy_allergy'})
+    interestDairyAllergy: boolean
 
-    @Column()
-    is_admin: boolean = false
+    @Column({name: 'is_admin', default: false, nullable: true})
+    isAdmin: boolean
 }
 
 @Entity()
@@ -48,23 +48,23 @@ export class Restaurant {
     @Column()
     city: string;
 
-    @Column()
+    @Column({name: 'zip_code'})
     zipcode: number;
 
     @Column()
     state: string;
 
-    @Column({nullable: true})
-    overall_score: number;
+    @Column({name:'overall_score',nullable: true})
+    overallScore: number;
 
-    @Column({nullable: true})
-    peanuts_score: number;
+    @Column({name:'peanut_score',nullable: true})
+    peanutScore: number;
 
-    @Column({nullable: true})
-    egg_score: number;
+    @Column({name:'egg_score',nullable: true})
+    eggScore: number;
 
-    @Column({nullable: true})
-    dairy_score: number;
+    @Column({name: 'dairy_score',nullable: true})
+    dairyScore: number;
 }
 
 export const AppDataSource = new DataSource({
@@ -82,8 +82,8 @@ export const AppDataSource = new DataSource({
     const restaurantRepository = AppDataSource.getRepository(Restaurant);
 
     // fixme: for some reason these queries are launched twice, causing node error
-    await userRepository.save({ username: 'admin', password: 'password', zipcode: 36043, city: 'Camisano Vicentino', state: 'Italy', interest_peanut_allergy: true, interest_egg_allergy: true, interest_dairy_allergy: true, is_admin: true });
-    await userRepository.save({ username: 'Luca Biasiolo', password: 'password2', zipcode: 36047, city: 'Montegalda',state: 'Italy', interest_peanut_allergy: false, interest_egg_allergy: false, interest_dairy_allergy: false, is_admin: false });
+    await userRepository.save({ username: 'admin', password: 'password', zipcode: 36043, city: 'Camisano Vicentino', state: 'Italy', interestPeanutAllergy: true, interestEggAllergy: true, interestDairyAllergy: true, isAdmin: true });
+    await userRepository.save({ username: 'Luca Biasiolo', password: 'password2', zipcode: 36047, city: 'Montegalda',state: 'Italy', interestPeanutAllergy: false, interestEggAllergy: false, interestDairyAllergy: false, isAdmin: false });
 
     await restaurantRepository.save({ name: 'La Moma', city: 'Camisano Vicentino', state: 'Italy', zipcode: 36043 });
     await restaurantRepository.save({ name: 'Red Quill', city: 'Vicenza', zipcode: 36100, state: 'Italy' })
