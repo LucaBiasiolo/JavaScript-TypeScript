@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import { Column, DataSource, IsNull, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, DataSource, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { Entity } from 'typeorm';
 
 @Entity()
-//@Unique(['username'])
+@Unique(['username'])
 export class User {
     @PrimaryGeneratedColumn()
     id: number
@@ -69,10 +69,11 @@ export class Restaurant {
 
 export const AppDataSource = new DataSource({
     type: 'sqlite',
-    database: 'memory',
-    synchronize: false,
+    database: 'database',
+    synchronize: true,
     entities: [User, Restaurant],
-    logging: ['query', 'error']
+    logging: ['error'],
+    dropSchema: true
 });
 
 (async () => {
@@ -80,8 +81,9 @@ export const AppDataSource = new DataSource({
     const userRepository = AppDataSource.getRepository(User);
     const restaurantRepository = AppDataSource.getRepository(Restaurant);
 
+    // fixme: for some reason these queries are launched twice, causing node error
     await userRepository.save({ username: 'admin', password: 'password', zipcode: 36043, city: 'Camisano Vicentino', state: 'Italy', interest_peanut_allergy: true, interest_egg_allergy: true, interest_dairy_allergy: true, is_admin: true });
-    //await userRepository.save({ username: 'Luca Biasiolo', password: 'password2', zipcode: 36047, city: 'Montegalda',state: 'Italy', interest_peanut_allergy: false, interest_egg_allergy: false, interest_dairy_allergy: false, is_admin: false });
+    await userRepository.save({ username: 'Luca Biasiolo', password: 'password2', zipcode: 36047, city: 'Montegalda',state: 'Italy', interest_peanut_allergy: false, interest_egg_allergy: false, interest_dairy_allergy: false, is_admin: false });
 
     await restaurantRepository.save({ name: 'La Moma', city: 'Camisano Vicentino', state: 'Italy', zipcode: 36043 });
     await restaurantRepository.save({ name: 'Red Quill', city: 'Vicenza', zipcode: 36100, state: 'Italy' })
