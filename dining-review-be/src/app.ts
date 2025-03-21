@@ -1,27 +1,29 @@
 import express from 'express';
-import db from './sqlite';
+import {User, AppDataSource, Restaurant } from './typeorm';
 
 const app = express();
 const port = 8080;
 const router = express.Router();
 
 router.get(`/users`, (req,res) =>{
-  db.all("select * from users", (err, rows) =>{
-    if (err){
-      res.status(500).send('Database error');
-    } else{
-      res.json(rows);
-    }
+  const userRepository = AppDataSource.getRepository(User)
+
+  userRepository.find().then((users) =>{  
+    res.status(200);
+    res.json(users)
+  }, (error) =>{
+    console.log(error);
   })
 })
 
 router.get(`/restaurants`, (req,res) =>{
-  db.all("select * from restaurants", (err, rows) =>{
-    if (err){
-      res.status(500).send('Database error');
-    } else{
-      res.json(rows);
-    }
+  const restaurantRepository = AppDataSource.getRepository(Restaurant)
+
+  restaurantRepository.find().then((restaurants) =>{
+    res.status(200)
+    res.json(restaurants)
+  }, (error) =>{
+    console.log(error)
   })
 })
 
