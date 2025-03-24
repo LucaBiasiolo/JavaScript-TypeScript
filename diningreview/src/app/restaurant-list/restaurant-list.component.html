@@ -1,0 +1,12 @@
+@for (restaurant of restaurantList; track $index) {
+<mat-card appearance="outlined">
+    <mat-card-header>
+    <mat-card-title>{{restaurant.name}}</mat-card-title>
+    <mat-card-subtitle>{{restaurant.city}} - {{restaurant.state}} - {{restaurant.zipcode}}</mat-card-subtitle> 
+    </mat-card-header>
+
+    <mat-card-actions>
+        <button mat-flat-button>Rate</button>
+    </mat-card-actions>
+</mat-card>
+}

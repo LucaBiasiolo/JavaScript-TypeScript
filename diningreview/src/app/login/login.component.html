@@ -1,0 +1,23 @@
+<p>Please login using username and password:</p>
+
+<!--Template-driven form version-->
+<!--
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+  <p>Username: <input mat-input type="text" name="username" ngModel required></p>
+  <p>Password: <input mat-input type="password" name="password" ngModel required></p>
+  <button mat-button type="submit" [disabled]="!loginForm.valid">Login</button>
+</form>
+-->
+
+<!--Reactive form version-->
+<form [formGroup]="loginFormReactive" (ngSubmit)="onSubmitReactive()">
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput type="text" name="username" formControlName="username">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" name="password" formControlName="password">
+  </mat-form-field>
+  <button mat-flat-button type="submit" [disabled]="!loginFormReactive.valid">Login</button>
+</form>
