@@ -1,1 +1,28 @@
-<p>tic-tac-toe works!</p>
+<h2>Tic-Tac-Toe</h2>
+<p>Player {{player}}, click on the position in which you want to put your {{playerSymbol}}</p>
+
+<div>
+    <button mat-fab (click)="populateCell(playerSymbol,0,0)">{{gameMatrixString[0][0]}}</button>
+    <button mat-fab (click)="populateCell(playerSymbol,0,1)">{{gameMatrixString[0][1]}}</button>
+    <button mat-fab (click)="populateCell(playerSymbol,0,2)">{{gameMatrixString[0][2]}}</button>
+</div>
+<div>
+    <button mat-fab (click)="populateCell(playerSymbol,1,0)">{{gameMatrixString[1][0]}}</button>
+    <button mat-fab (click)="populateCell(playerSymbol,1,1)">{{gameMatrixString[1][1]}}</button>
+    <button mat-fab (click)="populateCell(playerSymbol,1,2)">{{gameMatrixString[1][2]}}</button>
+</div>
+<div>
+    <button mat-fab (click)="populateCell(playerSymbol,2,0)">{{gameMatrixString[2][0]}}</button>
+    <button mat-fab (click)="populateCell(playerSymbol,2,1)">{{gameMatrixString[2][1]}}</button>
+    <button mat-fab (click)="populateCell(playerSymbol,2,2)">{{gameMatrixString[2][2]}}</button>
+</div>
+
+@if (cellAlreadyOccupied) {
+    <p>This cell is already occupied. Please choose another one</p>
+}
+
+@if(endGamePhrase){
+    <p>{{endGamePhrase}}</p>
+    <p>Press this button to reset game</p>
+    <button mat-raised-button (click)="resetGame()">Reset Game</button>
+}
