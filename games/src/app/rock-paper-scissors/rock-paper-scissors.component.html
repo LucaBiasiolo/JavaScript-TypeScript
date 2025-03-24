@@ -1,8 +1,8 @@
 <h2>Rock-Paper-Scissors</h2>
 <p>Please choose between rock, paper or scissors</p>
-<button mat-raised-button type="button" (click)="playRPS(0)">Rock</button>
-<button mat-raised-button type="button" (click)="playRPS(1)">Paper</button>
-<button mat-raised-button type="button" (click)="playRPS(2)">Scissors</button>
+<button mat-fab type="button" (click)="playRPS(0)">🗿</button>
+<button mat-fab type="button" (click)="playRPS(1)">📄</button>
+<button mat-fab type="button" (click)="playRPS(2)">✂️</button>
 
 @if (userChoice == 0) {
     <p>You chose Rock</p>
@@ -22,5 +22,5 @@
 
 @if (winnerPhrase) {
 <p>{{winnerPhrase}}</p>
-<p>Press again Rock, Paper or Scissors to start another game</p>
+<p>Press again your choice to start another game</p>
 }

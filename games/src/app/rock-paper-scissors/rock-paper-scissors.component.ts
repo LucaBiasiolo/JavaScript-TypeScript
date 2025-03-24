@@ -28,9 +28,7 @@ export class RockPaperScissorsComponent {
         this.computerChoice = computerChoice;
       }, 1000);
       setTimeout(() => {
-        
         this.winnerPhrase = winnerPhrase;
-
       }, 2000);
   }
 }
