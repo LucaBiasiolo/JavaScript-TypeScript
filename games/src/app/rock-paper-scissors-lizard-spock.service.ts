@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RockPaperScissorsService {
-
-  public computerChoice: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+export class RockPaperScissorsLizardSpockService {
+  computerChoice: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
 
   constructor() { }
 
-  playRPS(userChoice: number): string{
-    const computerChoice: number = Math.floor(Math.random() *3);
+  playRPSLS(userChoice: number): string{
+    const computerChoice: number = Math.floor(Math.random() *5);
     this.computerChoice.next(computerChoice);
     let winner: number = this.getWinner(userChoice, computerChoice);
     return this.getPhraseFromWinner(winner, this.getWordFromNumber(userChoice), this.getWordFromNumber(computerChoice));
   }
 
   private getWinner(userPick: number, computerPick: number): number{
-    let winnerMatrix: number[][] = [[0,2,1],[1,0,2],[2,1,0]]; // 0=tie, 1=human player wins, 2=computer wins
+    let winnerMatrix: number[][] = [[0,2,1,1,2],[1,0,2,2,1],[2,1,0,1,2],[2,1,2,0,1],[1,2,1,2,0]]; // 0=tie, 1=human player wins, 2=computer wins
     return winnerMatrix[userPick][computerPick];
   }
 
@@ -35,6 +34,8 @@ export class RockPaperScissorsService {
     mapNumberToWord.set(0,"Rock");
     mapNumberToWord.set(1,"Paper");
     mapNumberToWord.set(2,"Scissors");
+    mapNumberToWord.set(3,"Lizard");
+    mapNumberToWord.set(4,"Spock");
     return mapNumberToWord.get(number) || "Unknown code";
   }
 }

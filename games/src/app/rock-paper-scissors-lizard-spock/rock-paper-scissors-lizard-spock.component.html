@@ -1,1 +1,49 @@
-<p>rock-paper-scissors-lizard-spock works!</p>
+<h2>Rock-Paper-Scissors-Lizard-Spock</h2>
+<p>Please click on one of the buttons below</p>
+<button mat-fab type="button" (click)="playRPSLS(0)">🗿</button> <!-- Rock -->
+<button mat-fab type="button" (click)="playRPSLS(1)">📄</button> <!-- Paper -->
+<button mat-fab type="button" (click)="playRPSLS(2)">✂️</button> <!-- Scissors -->
+<button mat-fab type="button" (click)="playRPSLS(3)">🦎</button> <!-- Lizard -->
+<button mat-fab type="button" (click)="playRPSLS(4)">🖖</button> <!-- Spock -->
+
+
+@switch (userChoice) {
+    @case (0) {
+        <p>You chose Rock</p>
+    }
+    @case (1) {
+        <p>You chose Paper</p>
+    }
+    @case (2) {
+        <p>You chose Scissors</p>
+    }
+    @case (3) {
+        <p>You chose Lizard</p>
+    }
+    @case (4) {
+        <p>You chose Spock</p>
+    }
+}
+
+@switch (computerChoice) {
+    @case (0) {
+        <p>Computer chose Rock</p>
+    }
+    @case (1) {
+        <p>Computer chose Paper</p>
+    }
+    @case (2) {
+        <p>Computer chose Scissors</p>
+    }
+    @case (3) {
+        <p>Computer chose Lizard</p>
+    }
+    @case (4) {
+        <p>Computer chose Spock</p>
+    }
+}
+
+@if (winnerPhrase) {
+<p>{{winnerPhrase}}</p>
+<p>Press again your choice to start another game</p>
+}
