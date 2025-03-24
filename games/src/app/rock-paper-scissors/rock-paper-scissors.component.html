@@ -1,1 +1,26 @@
-<p>rock-paper-scissors works!</p>
+<h2>Rock-Paper-Scissors</h2>
+<p>Please choose between rock, paper or scissors</p>
+<button mat-raised-button type="button" (click)="playRPS(0)">Rock</button>
+<button mat-raised-button type="button" (click)="playRPS(1)">Paper</button>
+<button mat-raised-button type="button" (click)="playRPS(2)">Scissors</button>
+
+@if (userChoice == 0) {
+    <p>You chose Rock</p>
+}@else if (userChoice ==1) {
+    <p>You chose Paper</p>
+} @else if (userChoice == 2){
+    <p>You chose Scissors</p>
+}
+
+@if (computerChoice == 0) {
+    <p>Computer chose Rock</p>
+}@else if (computerChoice ==1) {
+    <p>Computer chose Paper</p>
+} @else if (computerChoice == 2){
+    <p>Computer chose Scissors</p>
+}
+
+@if (winnerPhrase) {
+<p>{{winnerPhrase}}</p>
+<p>Press again Rock, Paper or Scissors to start another game</p>
+}
