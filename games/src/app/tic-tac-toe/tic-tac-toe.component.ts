@@ -14,8 +14,7 @@ export class TicTacToeComponent{
   playerSymbol = 'X';
   gameMatrix: number[][] = [[0,0,0],[0,0,0],[0,0,0]];
   gameMatrixString: string[][] = [['','',''],['','',''],['','','']]
-  cellAlreadyOccupied: boolean = false;
-  endGamePhrase: string = ''
+  endGamePhrase: string = '';
 
   constructor(private ticTacToeService: TicTacToeService) {
     this.gameMatrix.forEach(row => row.fill(0));
@@ -40,8 +39,6 @@ export class TicTacToeComponent{
         this.player = 1;
         this.playerSymbol = 'X';
       }
-    } else {
-      this.cellAlreadyOccupied = true;
     }
   }
 
@@ -50,7 +47,6 @@ export class TicTacToeComponent{
     this.playerSymbol = 'X';
     this.gameMatrix.forEach(row => row.fill(0));
     this.gameMatrixString.forEach(row => row.fill(''));
-    this.cellAlreadyOccupied = false;
     this.endGamePhrase = '';
   }
 }
