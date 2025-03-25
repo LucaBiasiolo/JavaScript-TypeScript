@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RockPaperScissorsLizardSpockService } from '../rock-paper-scissors-lizard-spock.service';
+import { RockPaperScissorsLizardSpockService } from './rock-paper-scissors-lizard-spock.service';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({

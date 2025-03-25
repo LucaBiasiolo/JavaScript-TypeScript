@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { RockPaperScissorsService } from '../rock-paper-scissors.service';
+import { RockPaperScissorsService } from './rock-paper-scissors.service';
 
 @Component({
   selector: 'app-rock-paper-scissors',
