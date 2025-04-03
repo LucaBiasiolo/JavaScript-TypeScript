@@ -4,10 +4,11 @@ import { IRestaurant } from '../interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-restaurant-list',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [MatCardModule, MatButtonModule, RouterModule],
   templateUrl: './restaurant-list.component.html',
   styleUrl: './restaurant-list.component.css'
 })
