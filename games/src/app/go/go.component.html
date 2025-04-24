@@ -1,1 +1,8 @@
-<p>go works!</p>
+<h2>Game of Go</h2>
+@for (row of gameMatrix; track $index; let i = $index) {
+    <div>
+        @for (column of row; track $index; let j = $index ) {
+            <button mat-fab (click)="placeStone(i,j)">{{gameMatrix[i][j] != '' ? gameMatrix[i][j] : '╋'}}</button>
+        }
+    </div>
+}
