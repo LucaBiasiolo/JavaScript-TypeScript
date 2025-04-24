@@ -3,11 +3,19 @@ import { RockPaperScissorsComponent } from './rock-paper-scissors/rock-paper-sci
 import { RockPaperScissorsLizardSpockComponent } from './rock-paper-scissors-lizard-spock/rock-paper-scissors-lizard-spock.component';
 import { ConnectFourComponent } from './connect-four/connect-four.component';
 import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
+import { GameOfFifteenComponent } from './game-of-fifteen/game-of-fifteen.component';
+import { CheckersComponent } from './checkers/checkers.component';
+import { ChessComponent } from './chess/chess.component';
+import { GoComponent } from './go/go.component';
 
 export const routes: Routes = [
     {path: 'rock-paper-scissors', component: RockPaperScissorsComponent},
     {path: 'rock-paper-scissors-lizard-spock', component: RockPaperScissorsLizardSpockComponent},
     {path: 'tic-tac-toe', component: TicTacToeComponent},
-    {path: 'connect-four', component: ConnectFourComponent}
+    {path: 'connect-four', component: ConnectFourComponent},
+    {path: 'game-of-15', component: GameOfFifteenComponent},
+    {path: 'checkers', component: CheckersComponent},
+    {path: 'chess', component: ChessComponent},
+    {path: 'go', component: GoComponent}
 ];
 // todo: add path for Home component and Page not found wildcard
