@@ -1,4 +1,5 @@
 div button{
     box-shadow: none;
     font-size: 2em;
+    border-radius: 0%;
 }
