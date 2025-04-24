@@ -48,4 +48,8 @@ export class ChessComponent implements OnInit {
     this.gameMatrix[0][4] = "♚"; // Black King
     this.gameMatrix[7][4] = "♔"; // White King
   }
+
+  public selectPiece(row: number, column: number){
+    
+  }
 }

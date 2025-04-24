@@ -58,4 +58,8 @@ export class CheckersComponent {
     this.gameMatrix[9][6] = "⛀";
     this.gameMatrix[9][8] = "⛀";
   }
+
+  public selectPiece(row: number, column: number){
+    
+  }
 }

@@ -1,7 +1,19 @@
 <h2>Chess</h2>
-<p><i>The game of chess is like a swordfight... You must think first, before you move!</i></p>
+<p><i>"The game of chess is like a swordfight... You must think first, before you move!"</i></p>
 <p>This is a game for two human players. The computer will handle the game rules</p>
 <p>{{player}} Player, click first on the piece you want to move and then on the square you want to move the piece to</p>
+@for (row of gameMatrix; track $index; let i = $index) {
+    <div>
+    <button mat-fab disabled>{{8-i}}</button>
+        @for (column of row; track $index; let j = $index ) {
+            @if ((i+j) % 2 == 0) {
+                <button mat-fab (click)="selectPiece(i,j)" style="background-color: #e9e4d8;">{{gameMatrix[i][j]}}</button>
+            }@else {
+                <button mat-fab (click)="selectPiece(i,j)" style="background-color: #8ab364;">{{gameMatrix[i][j]}}</button>
+            }
+        }
+    </div>
+}
 <div>
     <button mat-fab disabled></button>
     <button mat-fab disabled>a</button>
@@ -12,113 +24,4 @@
     <button mat-fab disabled>f</button>
     <button mat-fab disabled>g</button>
     <button mat-fab disabled>h</button>
-    <button mat-fab disabled></button>
-</div>
-<div>
-    <button mat-fab disabled>8</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[0][0]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[0][1]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[0][2]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[0][3]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[0][4]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[0][5]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[0][6]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[0][7]}}</button>
-    <button mat-fab disabled>8</button>
-</div>
-<div>
-    <button mat-fab disabled>7</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[1][0]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[1][1]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[1][2]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[1][3]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[1][4]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[1][5]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[1][6]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[1][7]}}</button>
-    <button mat-fab disabled>7</button>
-</div>
-<div>
-    <button mat-fab disabled>6</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[2][0]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[2][1]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[2][2]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[2][3]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[2][4]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[2][5]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[2][6]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[2][7]}}</button>
-    <button mat-fab disabled>6</button>
-</div>
-<div>
-    <button mat-fab disabled>5</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[3][0]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[3][1]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[3][2]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[3][3]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[3][4]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[3][5]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[3][6]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[3][7]}}</button>
-    <button mat-fab disabled>5</button>
-</div>
-<div>
-    <button mat-fab disabled>4</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[4][0]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[4][1]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[4][2]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[4][3]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[4][4]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[4][5]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[4][6]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[4][7]}}</button>
-    <button mat-fab disabled>4</button>
-</div>
-<div>
-    <button mat-fab disabled>3</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[5][0]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[5][1]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[5][2]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[5][3]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[5][4]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[5][5]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[5][6]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[5][7]}}</button>
-    <button mat-fab disabled>3</button>
-</div>
-<div>
-    <button mat-fab disabled>2</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[6][0]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[6][1]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[6][2]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[6][3]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[6][4]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[6][5]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[6][6]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[6][7]}}</button>
-    <button mat-fab disabled>2</button>
-</div>
-<div>
-    <button mat-fab disabled>1</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[7][0]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[7][1]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[7][2]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[7][3]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[7][4]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[7][5]}}</button>
-    <button mat-fab style="background-color: #8ab364;">{{gameMatrix[7][6]}}</button>
-    <button mat-fab style="background-color: #e9e4d8;">{{gameMatrix[7][7]}}</button>
-    <button mat-fab disabled>1</button>
-</div>
-<div>
-    <button mat-fab disabled></button>
-    <button mat-fab disabled>a</button>
-    <button mat-fab disabled>b</button>
-    <button mat-fab disabled>c</button>
-    <button mat-fab disabled>d</button>
-    <button mat-fab disabled>e</button>
-    <button mat-fab disabled>f</button>
-    <button mat-fab disabled>g</button>
-    <button mat-fab disabled>h</button>
-    <button mat-fab disabled></button>
 </div>
