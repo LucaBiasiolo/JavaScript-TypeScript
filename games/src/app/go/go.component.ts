@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { PieceColor } from '../chess/PieceColor';
 
 @Component({
   selector: 'app-go',
@@ -9,13 +10,19 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class GoComponent implements OnInit {
   gameMatrix: string[][] = Array.from({ length: 9 }, () => Array(9).fill('')); //9 rows, 9 columns 
+  activeColor: PieceColor | undefined = undefined; // Black player starts
 
  public ngOnInit(): void {
-    this.gameMatrix[0][0] =  "⚫";
-    this.gameMatrix[2][3] = "⚪";
+   this.activeColor = PieceColor.BLACK;
  }
 
  public placeStone(row: number, column: number){
-    this.gameMatrix[row][column] = "⚪";
+   if(this.activeColor === PieceColor.BLACK){
+      this.gameMatrix[row][column] =  "⚫";
+      this.activeColor = PieceColor.WHITE;
+   } else {
+      this.gameMatrix[row][column] = "⚪";
+      this.activeColor = PieceColor.BLACK;
+   }
  }
 }
