@@ -1,15 +1,18 @@
 div {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items:start;
 }
 button[mat-fab] {
     background-color: #deb887;
-    width: 60px;
-    height: 60px;
-    font-size: 55px;
-    line-height: 1;
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
     box-shadow: none;
     border-radius: 0%;
-    color: black; /* Change '+' symbol color to black */
+    color: black;
+}
+button[disabled]{
+    font-size: 25px;
+    background-color: transparent;
 }
