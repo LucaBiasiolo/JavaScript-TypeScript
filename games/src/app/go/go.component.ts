@@ -14,10 +14,12 @@ export class GoComponent {
    boardDimension: number = 9;
    board: Stone[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
    columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
+   logOfMoves: string[] = [];
 
    public placeStone(row: number, column: number) {
       if (this.isStonePlaceable(row, column, this.activeColor)) {
          this.board[row][column] = new Stone(this.activeColor);
+         this.logOfMoves.push(this.translateMoveIntoString(row,column))
          if (this.activeColor === PieceColor.BLACK) {
             this.activeColor = PieceColor.WHITE;
          } else {
@@ -26,12 +28,20 @@ export class GoComponent {
       }
    }
 
+   public translateMoveIntoString(row: number, column: number): string{
+      let stringRow: string = `${this.boardDimension - row}`;
+      let stringColumn: string = this.columnLetters[column];
+
+      return stringColumn + stringRow;
+   }
+
+   // todo: improve encapsulation of this method
    public isStonePlaceable(row: number, column: number, playerColor: PieceColor): boolean {
       if (!this.board[row][column]) {
          let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column);
          let adjacentStonesColors: PieceColor[] = adjacentStones.map(stone => stone.getColor());
 
-         return adjacentStonesColors.includes(playerColor) || this.hasALiberty(row, column);
+         return adjacentStonesColors.includes(playerColor) || this.hasALiberty(row, column, adjacentStones);
       }
       return false;
    }
@@ -51,8 +61,7 @@ export class GoComponent {
       return adjacentStones;
    }
 
-   public hasALiberty(row: number, column: number): boolean {
-      let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column);
+   public hasALiberty(row: number, column: number, adjacentStones: Stone[]): boolean {
       if (row == 0 || row == this.board.length - 1 || column == 0 || column == this.board.length - 1) { // stone on a border
          if ((row == 0 && column == 0) || (row == this.board.length -1 && column == 0) || 
          (row == 0 && column == this.board.length -1) || 
