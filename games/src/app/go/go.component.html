@@ -1,8 +1,17 @@
 <h2>Game of Go</h2>
+<div>
+    <button mat-fab disabled></button>
+    @for (columnLetter of columnLetters; track $index) {
+        @if ($index < boardDimension) {
+        <button mat-fab disabled>{{columnLetter}}</button>
+        }
+    }
+</div>
 @for (row of gameMatrix; track $index; let i = $index) {
     <div>
+        <button mat-fab disabled>{{gameMatrix.length-i}}</button>
         @for (column of row; track $index; let j = $index ) {
-            <button mat-fab (click)="placeStone(i,j)">{{gameMatrix[i][j] != '' ? gameMatrix[i][j] : '╋'}}</button>
+            <button mat-fab (click)="placeStone(i,j)">{{gameMatrix[i][j] ? gameMatrix[i][j] : '╋'}}</button>
         }
     </div>
 }
