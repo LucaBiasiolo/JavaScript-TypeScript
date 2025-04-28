@@ -12,3 +12,7 @@ button[mat-fab] {
     box-shadow: none;
     border-radius: 0%;
 }
+button[disabled]{
+    background-color: transparent;
+    font-size: 20px;
+}
