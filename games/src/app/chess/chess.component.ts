@@ -17,10 +17,11 @@ import { King } from './Pieces/King';
 })
 export class ChessComponent implements OnInit {
 
-  player = 'White';
+  activeColor: PieceColor | undefined = undefined;
   gameMatrix: ChessPiece[][] = Array.from({ length: 8 }, () => Array(8).fill('')); //8 rows, 8 columns 
 
   public ngOnInit(): void {
+    this.activeColor = PieceColor.WHITE;
     this.initializeBoard(); 
   }
 
