@@ -1,4 +1,5 @@
 <h2>Game of Go</h2>
+<p>Welcome to the game of Go! Black plays first, then white.</p>
 <div>
     <button mat-fab disabled></button>
     @for (columnLetter of columnLetters; track $index) {
@@ -7,11 +8,11 @@
         }
     }
 </div>
-@for (row of gameMatrix; track $index; let i = $index) {
+@for (row of board; track $index; let i = $index) {
     <div>
-        <button mat-fab disabled>{{gameMatrix.length-i}}</button>
+        <button mat-fab disabled>{{board.length-i}}</button>
         @for (column of row; track $index; let j = $index ) {
-            <button mat-fab (click)="placeStone(i,j)">{{gameMatrix[i][j] ? gameMatrix[i][j] : '╋'}}</button>
+            <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
         }
     </div>
 }
