@@ -1,20 +1,18 @@
 import { ChessPiece } from "./ChessPiece";
-import { PieceColor } from "../PieceColor";
+import { PieceColor } from "../../PieceColor";
 
-export class Queen extends ChessPiece {
+export class Knight extends ChessPiece {
   constructor(color: PieceColor) {
     if (color === PieceColor.WHITE) {
-      super("♕", "Q", color); // White Queen
+      super("♘", "N", color); // White Knight
     } else if (color === PieceColor.BLACK) {
-      super("♛", "Q", color); // Black Queen
+      super("♞", "N", color); // Black Knight
     }
   }
 
   public isMoveValid(startX: number, startY: number, endX: number, endY: number): boolean {
     const deltaX = Math.abs(endX - startX);
     const deltaY = Math.abs(endY - startY);
-
-    // The Queen can move any number of squares in any direction
-    return deltaX === 0 || deltaY === 0 || deltaX === deltaY;
+    return (deltaX === 2 && deltaY === 1) || (deltaX === 1 && deltaY === 2);
   }
 }

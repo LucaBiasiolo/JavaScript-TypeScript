@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ChessPiece } from './Pieces/ChessPiece';
-import { Pawn } from './Pieces/Pawn';
+import { ChessPiece } from './beans/pieces/ChessPiece';
+import { Pawn } from './beans/pieces/Pawn';
 import { PieceColor } from './PieceColor';
-import { Rook } from './Pieces/Rook';
-import { Knight } from './Pieces/Knight';
-import { Bishop } from './Pieces/Bishop';
-import { Queen } from './Pieces/Queen';
-import { King } from './Pieces/King';
+import { Rook } from './beans/pieces/Rook';
+import { Knight } from './beans/pieces/Knight';
+import { Bishop } from './beans/pieces/Bishop';
+import { Queen } from './beans/pieces/Queen';
+import { King } from './beans/pieces/King';
 import { MoveService } from './move.service';
 import { Move } from './Move';
 

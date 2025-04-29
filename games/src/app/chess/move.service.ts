@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Move } from './Move';
 import { Castling } from './Castling';
-import { Pawn } from './Pieces/Pawn';
+import { Pawn } from './beans/pieces/Pawn';
 import { ChessBoardUtil } from './ChessBoardUtil';
 
 @Injectable({
