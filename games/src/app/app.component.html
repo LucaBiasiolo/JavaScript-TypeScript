@@ -1,14 +1,17 @@
 <h1>Welcome to Angular games!</h1>
 <p>Please choose which game you want to play</p>
-<mat-nav-list>
-    <a mat-list-item routerLink="/rock-paper-scissors" routerLinkActive="active">Rock-Paper-Scissors</a>
-    <a mat-list-item routerLink="/rock-paper-scissors-lizard-spock" routerLinkActive="active">Rock-Paper-Scissors-Lizard-Spock</a>
-    <a mat-list-item routerLink="/tic-tac-toe" routerLinkActive="active">Tic-Tac-Toe</a>
-    <a mat-list-item routerLink="/connect-four" routerLinkActive="active">Connect Four</a>
-    <a mat-list-item routerLink="/game-of-15" routerLinkActive="active">Game of 15</a> 
-    <a mat-list-item routerLink="/checkers" routerLinkActive="active">Checkers</a> 
-    <a mat-list-item routerLink="/chess" routerLinkActive="active">Chess</a> 
-    <a mat-list-item routerLink="/go" routerLinkActive="active">Go</a> 
-</mat-nav-list>
-
+<mat-form-field>
+    <mat-label>Game</mat-label>
+    <mat-select>
+        <mat-option routerLink="/rock-paper-scissors" routerLinkActive="active">Rock-Paper-Scissors</mat-option>
+        <mat-option routerLink="/rock-paper-scissors-lizard-spock"
+            routerLinkActive="active">Rock-Paper-Scissors-Lizard-Spock</mat-option>
+        <mat-option routerLink="/tic-tac-toe" routerLinkActive="active">Tic-Tac-Toe</mat-option>
+        <mat-option routerLink="/connect-four" routerLinkActive="active">Connect Four</mat-option>
+        <mat-option routerLink="/game-of-15" routerLinkActive="active">Game of 15</mat-option>
+        <mat-option routerLink="/checkers" routerLinkActive="active">Checkers</mat-option>
+        <mat-option routerLink="/chess" routerLinkActive="active">Chess</mat-option>
+        <mat-option routerLink="/go" routerLinkActive="active">Go</mat-option>
+    </mat-select>
+</mat-form-field>
 <router-outlet></router-outlet>
