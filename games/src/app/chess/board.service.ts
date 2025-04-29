@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Knight } from './beans/pieces/Knight';
 import { ChessPiece } from './beans/pieces/ChessPiece';
-import { ChessBoard } from './beans/ChessBoard';
 
 @Injectable({
   providedIn: 'root'

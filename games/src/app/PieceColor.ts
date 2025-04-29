@@ -1,6 +1,6 @@
 export enum PieceColor {
-  BLACK = "black",
-  WHITE = "white"
+  BLACK = "Black",
+  WHITE = "White"
 }
 
 export namespace PieceColor {
