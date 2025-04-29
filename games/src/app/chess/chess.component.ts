@@ -79,6 +79,7 @@ export class ChessComponent implements OnInit {
     if (this.selectedPiece && this.startingCoordinates.length ==2 && this.endingCoordinates.length == 2) {
       if (this.selectedPiece.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1])) {
         // todo: check that there are no ally pieces along the trajectory
+        // todo: add capturing
         this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
         this.board[this.endingCoordinates[0]][this.endingCoordinates[1]] = this.selectedPiece;
         let move: Move = new Move(this.selectedPiece, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);

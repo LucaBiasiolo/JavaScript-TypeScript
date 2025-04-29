@@ -26,7 +26,9 @@
     <button mat-fab disabled>g</button>
     <button mat-fab disabled>h</button>
 </div>
+@if (moveLog.length > 0) {
 <p>Log of moves:</p>
 @for (move of moveLog; track $index) {
 <div>{{move}}</div>
+}
 }
