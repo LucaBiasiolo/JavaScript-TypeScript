@@ -1,18 +1,19 @@
 <h2>Chess</h2>
 <p><i>"The game of chess is like a swordfight... You must think first, before you move!"</i></p>
 <p>This is a game for two human players. The computer will handle the game rules</p>
-<p>{{activeColor}} Player, click first on the piece you want to move and then on the square you want to move the piece to</p>
-@for (row of gameMatrix; track $index; let i = $index) {
-    <div>
+<p>{{activeColor}} Player, click first on the piece you want to move and then on the square you want to move the piece
+    to</p>
+@for (row of board; track $index; let i = $index) {
+<div>
     <button mat-fab disabled>{{8-i}}</button>
-        @for (column of row; track $index; let j = $index ) {
-            @if ((i+j) % 2 == 0) {
-                <button mat-fab (click)="selectPiece(i,j)" style="background-color: #e9e4d8;">{{gameMatrix[i][j]}}</button>
-            }@else {
-                <button mat-fab (click)="selectPiece(i,j)" style="background-color: #8ab364;">{{gameMatrix[i][j]}}</button>
-            }
-        }
-    </div>
+    @for (column of row; track $index; let j = $index ) {
+    @if ((i+j) % 2 == 0) {
+    <button mat-fab (click)="movePiece(i,j)" style="background-color: #e9e4d8;">{{board[i][j]}}</button>
+    }@else {
+    <button mat-fab (click)="movePiece(i,j)" style="background-color: #8ab364;">{{board[i][j]}}</button>
+    }
+    }
+</div>
 }
 <div>
     <button mat-fab disabled></button>
@@ -25,3 +26,7 @@
     <button mat-fab disabled>g</button>
     <button mat-fab disabled>h</button>
 </div>
+<p>Log of moves:</p>
+@for (move of moveLog; track $index) {
+<div>{{move}}</div>
+}
