@@ -1,25 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PieceColor } from '../chess/PieceColor';
 import { Stone } from './Stone';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
    selector: 'app-go',
-   imports: [MatButtonModule],
+   imports: [MatButtonModule, MatSelectModule, MatOptionModule],
    templateUrl: './go.component.html',
    styleUrl: './go.component.css'
 })
 export class GoComponent {
    activeColor: PieceColor = PieceColor.BLACK;
    boardDimension: number = 9;
-   board: Stone[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
    columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
    logOfMoves: string[] = [];
+   board: Stone[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+
+
+   recreateBoard() {
+      this.board = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+   }
 
    public placeStone(row: number, column: number) {
       if (this.isStonePlaceable(row, column, this.activeColor)) {
          this.board[row][column] = new Stone(this.activeColor);
-         this.logOfMoves.push(this.translateMoveIntoString(row,column))
+         this.logOfMoves.push(this.translateMoveIntoString(row, column))
          if (this.activeColor === PieceColor.BLACK) {
             this.activeColor = PieceColor.WHITE;
          } else {
@@ -28,7 +35,7 @@ export class GoComponent {
       }
    }
 
-   public translateMoveIntoString(row: number, column: number): string{
+   public translateMoveIntoString(row: number, column: number): string {
       let stringRow: string = `${this.boardDimension - row}`;
       let stringColumn: string = this.columnLetters[column];
 
@@ -47,10 +54,10 @@ export class GoComponent {
    }
 
    private getAdjacentStonesByMatrixCoordinates(row: number, column: number): Stone[] {
-      let upperStone: Stone | undefined = this.getStoneByMatrixCoordinates(row - 1,column);
-      let lowerStone: Stone | undefined = this.getStoneByMatrixCoordinates(row + 1,column);
-      let rightStone: Stone | undefined = this.getStoneByMatrixCoordinates(row,column + 1);
-      let leftStone: Stone | undefined = this.getStoneByMatrixCoordinates(row,column - 1);
+      let upperStone: Stone | undefined = this.getStoneByMatrixCoordinates(row - 1, column);
+      let lowerStone: Stone | undefined = this.getStoneByMatrixCoordinates(row + 1, column);
+      let rightStone: Stone | undefined = this.getStoneByMatrixCoordinates(row, column + 1);
+      let leftStone: Stone | undefined = this.getStoneByMatrixCoordinates(row, column - 1);
 
       let adjacentStones: Stone[] = [];
       if (upperStone) adjacentStones.push(upperStone);
@@ -63,9 +70,9 @@ export class GoComponent {
 
    public hasALiberty(row: number, column: number, adjacentStones: Stone[]): boolean {
       if (row == 0 || row == this.board.length - 1 || column == 0 || column == this.board.length - 1) { // stone on a border
-         if ((row == 0 && column == 0) || (row == this.board.length -1 && column == 0) || 
-         (row == 0 && column == this.board.length -1) || 
-         (row == this.board.length -1 && column == this.board.length -1)) {
+         if ((row == 0 && column == 0) || (row == this.board.length - 1 && column == 0) ||
+            (row == 0 && column == this.board.length - 1) ||
+            (row == this.board.length - 1 && column == this.board.length - 1)) {
             // stone on an edge
             return adjacentStones.length < 2;
          }
@@ -75,10 +82,10 @@ export class GoComponent {
       return adjacentStones.length < 4;
    }
 
-   private getStoneByMatrixCoordinates(row: number, column: number): Stone| undefined{
-      try{
+   private getStoneByMatrixCoordinates(row: number, column: number): Stone | undefined {
+      try {
          return this.board[row][column];
-      } catch (error: any){
+      } catch (error: any) {
          return undefined;
       }
    }

@@ -1,18 +1,27 @@
 <h2>Game of Go</h2>
-<p>Welcome to the game of Go! Black plays first, then white.</p>
+<p>Welcome to the game of Go! Choose the board dimension</p>
+<mat-form-field>
+    <mat-label>Board dimension</mat-label>
+    <mat-select [(value)]="boardDimension">
+        <mat-option [value]="9">9x9</mat-option>
+        <mat-option [value]="13">13x13</mat-option>
+        <mat-option [value]="19">19x19</mat-option>
+    </mat-select>
+</mat-form-field>
+<button mat-raised-button type="button" (click)="recreateBoard()">Recreate board</button>
 <div>
     <button mat-fab disabled></button>
     @for (columnLetter of columnLetters; track $index) {
         @if ($index < boardDimension) {
         <button mat-fab disabled>{{columnLetter}}</button>
         }
-    }
+        }
 </div>
 @for (row of board; track $index; let i = $index) {
-    <div>
-        <button mat-fab disabled>{{board.length-i}}</button>
-        @for (column of row; track $index; let j = $index ) {
-            <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
-        }
-    </div>
+<div>
+    <button mat-fab disabled>{{boardDimension - i}}</button>
+    @for (column of row; track $index; let j = $index ) {
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
+    }
+</div>
 }
