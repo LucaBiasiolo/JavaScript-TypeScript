@@ -1,4 +1,4 @@
-import { PieceColor } from "../chess/PieceColor";
+import { PieceColor } from "../PieceColor";
 
 export class Stone {
   private color: PieceColor;

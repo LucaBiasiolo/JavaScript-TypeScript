@@ -1,5 +1,5 @@
 import { Castling } from "./Castling";
-import { ChessPiece } from "./beans/pieces/ChessPiece";
+import { ChessPiece } from "./pieces/ChessPiece";
 
 export class Move {
     private _startRow: number;

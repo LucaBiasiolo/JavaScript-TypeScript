@@ -1,5 +1,5 @@
 import { ChessPiece } from "./ChessPiece";
-import { PieceColor } from "../../PieceColor";
+import { PieceColor } from "../../../PieceColor";
 
 export class Pawn extends ChessPiece {
   constructor(color: PieceColor) {

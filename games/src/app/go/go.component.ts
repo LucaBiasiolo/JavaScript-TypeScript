@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { PieceColor } from '../chess/PieceColor';
+import { PieceColor } from '../PieceColor';
 import { Stone } from './Stone';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
