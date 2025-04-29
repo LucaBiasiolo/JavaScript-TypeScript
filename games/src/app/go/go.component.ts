@@ -16,7 +16,7 @@ export class GoComponent {
    boardDimension: number = 9;
    columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
    logOfMoves: string[] = [];
-   board: Stone[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+   board: (Stone|undefined)[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
 
 
    recreateBoard() {
