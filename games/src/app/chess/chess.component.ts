@@ -76,19 +76,21 @@ export class ChessComponent implements OnInit {
     } else {
       this.endingCoordinates = [row, column];
     }
-    if (this.selectedPiece && this.startingCoordinates && this.endingCoordinates) {
+    if (this.selectedPiece && this.startingCoordinates.length ==2 && this.endingCoordinates.length == 2) {
       if (this.selectedPiece.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1])) {
         // todo: check that there are no ally pieces along the trajectory
         this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
         this.board[this.endingCoordinates[0]][this.endingCoordinates[1]] = this.selectedPiece;
         let move: Move = new Move(this.selectedPiece, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
         this.moveLog.push(this.moveService.toAlgebraicNotation(move));
+        this.startingCoordinates = [];
+        this.endingCoordinates = [];
+        if (this.activeColor == PieceColor.WHITE) {
+          this.activeColor = PieceColor.BLACK;
+        } else {
+          this.activeColor = PieceColor.WHITE;
+        }
       }
-    }
-    if (this.activeColor == PieceColor.WHITE) {
-      this.activeColor = PieceColor.BLACK;
-    } else {
-      this.activeColor = PieceColor.WHITE;
     }
   }
 }
