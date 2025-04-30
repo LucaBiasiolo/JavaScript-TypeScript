@@ -1,5 +1,5 @@
 <h2>Chess</h2>
-<p><i>"The game of chess is like a swordfight... You must think first, before you move!"</i></p>
+<cite>The game of chess is like a swordfight... You must think first, before you move!</cite>
 <p>This is a game for two human players. The computer will handle the game rules</p>
 <p>{{activeColor}} player, it's your turn</p>
 @for (row of board; track $index; let i = $index) {
@@ -7,9 +7,11 @@
     <button mat-fab disabled>{{8-i}}</button>
     @for (column of row; track $index; let j = $index ) {
     @if ((i+j) % 2 == 0) {
-    <button mat-fab (click)="movePiece(i,j)" style="background-color: #e9e4d8;">{{board[i][j]}}</button>
+    <button mat-fab draggable="true" (dragstart)="onDragStart(i,j)" (dragover)="$event.preventDefault()"
+        (drop)="onDrop(i,j)" (click)="movePiece(i,j)" style="background-color: #e9e4d8;">{{board[i][j]}}</button>
     }@else {
-    <button mat-fab (click)="movePiece(i,j)" style="background-color: #8ab364;">{{board[i][j]}}</button>
+    <button mat-fab draggable="true" (dragstart)="onDragStart(i,j)" (dragover)="$event.preventDefault()"
+        (drop)="onDrop(i,j)" (click)="movePiece(i,j)" style="background-color: #8ab364;">{{board[i][j]}}</button>
     }
     }
 </div>

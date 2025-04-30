@@ -21,8 +21,35 @@ export class ChessComponent {
   startingCoordinates: number[] = [];
   endingCoordinates: number[] = [];
   moveLog: string[] = []
+  pieceToDrag: ChessPiece | undefined = undefined;
 
   constructor(private moveService: MoveService, private boardService: BoardService) { }
+
+  public onDragStart(row: number, column: number) {
+    if (this.board[row][column]) {
+      let pieceToDrag: ChessPiece = this.board[row][column];
+      if (pieceToDrag.getColor() === this.activeColor) {
+        this.pieceToDrag = pieceToDrag;
+        this.startingCoordinates = [row, column];
+      }
+    }
+  }
+
+  public onDrop(row: number, column: number) {
+    this.endingCoordinates = [row, column];
+    if (this.pieceToDrag?.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1],
+       this.endingCoordinates[0], this.endingCoordinates[1])) {
+      if (!this.board[row][column] || this.board[row][column].getColor() !== this.activeColor) { // the first case is for simple movement, the second for capturing
+        this.board[row][column] = this.pieceToDrag;
+        this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
+        if (this.activeColor == PieceColor.WHITE) {
+            this.activeColor = PieceColor.BLACK;
+        } else {
+            this.activeColor = PieceColor.WHITE;
+        }
+      }
+    }
+  }
 
   public movePiece(row: number, column: number) {
     if (this.board[row][column]) {
