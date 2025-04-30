@@ -40,29 +40,31 @@ export class ChessComponent {
     this.endingCoordinates = [row, column];
     if (this.pieceToDrag?.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1],
       this.endingCoordinates[0], this.endingCoordinates[1])) {
-      if (!this.board[row][column] || this.board[row][column].getColor() !== this.activeColor) { // the first case is for simple movement, the second for capturing
-        if (this.board[row][column]){
-          this.pieceToRemove = this.board[row][column];
-        }
-        this.board[row][column] = this.pieceToDrag;
-        this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
+      if (!this.boardService.isTrajectoryBlocked(this.pieceToDrag, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1], this.board)) {
+        if (!this.board[row][column] || this.board[row][column].getColor() !== this.activeColor) { // the first case is for simple movement, the second for capturing
+          if (this.board[row][column]) {
+            this.pieceToRemove = this.board[row][column];
+          }
+          this.board[row][column] = this.pieceToDrag;
+          this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
 
-        let move: Move = new Move(this.pieceToDrag, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
-        if (this.pieceToRemove) {
-          move.isCapture = true;
-        }
-        this.moveLog.push(this.moveService.toAlgebraicNotation(move));
+          let move: Move = new Move(this.pieceToDrag, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
+          if (this.pieceToRemove) {
+            move.isCapture = true;
+          }
+          this.moveLog.push(this.moveService.toAlgebraicNotation(move));
 
-        if (this.activeColor == PieceColor.WHITE) {
-          this.activeColor = PieceColor.BLACK;
-        } else {
-          this.activeColor = PieceColor.WHITE;
+          if (this.activeColor == PieceColor.WHITE) {
+            this.activeColor = PieceColor.BLACK;
+          } else {
+            this.activeColor = PieceColor.WHITE;
+          }
         }
       }
     }
   }
 
-  public movePiece(row: number, column: number) {
+  public onClick(row: number, column: number) {
     if (this.board[row][column]) {
       let selectedPiece: ChessPiece = this.board[row][column];
       if (selectedPiece.getColor() === this.activeColor) {
