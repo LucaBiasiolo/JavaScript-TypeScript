@@ -17,7 +17,8 @@ export class ChessComponent {
 
   activeColor: PieceColor = PieceColor.WHITE;
   board: (ChessPiece | undefined)[][] = new ChessBoard().board;
-  selectedPiece: ChessPiece | undefined = undefined
+  selectedPiece: ChessPiece | undefined = undefined;
+  pieceToRemove: ChessPiece | undefined = undefined;
   startingCoordinates: number[] = [];
   endingCoordinates: number[] = [];
   moveLog: string[] = []
@@ -38,14 +39,24 @@ export class ChessComponent {
   public onDrop(row: number, column: number) {
     this.endingCoordinates = [row, column];
     if (this.pieceToDrag?.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1],
-       this.endingCoordinates[0], this.endingCoordinates[1])) {
+      this.endingCoordinates[0], this.endingCoordinates[1])) {
       if (!this.board[row][column] || this.board[row][column].getColor() !== this.activeColor) { // the first case is for simple movement, the second for capturing
+        if (this.board[row][column]){
+          this.pieceToRemove = this.board[row][column];
+        }
         this.board[row][column] = this.pieceToDrag;
         this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
+
+        let move: Move = new Move(this.pieceToDrag, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
+        if (this.pieceToRemove) {
+          move.isCapture = true;
+        }
+        this.moveLog.push(this.moveService.toAlgebraicNotation(move));
+
         if (this.activeColor == PieceColor.WHITE) {
-            this.activeColor = PieceColor.BLACK;
+          this.activeColor = PieceColor.BLACK;
         } else {
-            this.activeColor = PieceColor.WHITE;
+          this.activeColor = PieceColor.WHITE;
         }
       }
     }
@@ -58,6 +69,9 @@ export class ChessComponent {
         this.selectedPiece = selectedPiece;
         this.startingCoordinates = [row, column];
         this.endingCoordinates = [];
+      } else {
+        this.pieceToRemove = selectedPiece;
+        this.endingCoordinates = [row, column];
       }
     } else {
       this.endingCoordinates = [row, column];
@@ -65,10 +79,13 @@ export class ChessComponent {
     if (this.selectedPiece && this.startingCoordinates.length == 2 && this.endingCoordinates.length == 2) {
       if (this.selectedPiece.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1])) {
         if (!this.boardService.isTrajectoryBlocked(this.selectedPiece, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1], this.board)) {
-          // todo: add capturing
           this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
           this.board[this.endingCoordinates[0]][this.endingCoordinates[1]] = this.selectedPiece;
+
           let move: Move = new Move(this.selectedPiece, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
+          if (this.pieceToRemove) {
+            move.isCapture = true;
+          }
           this.moveLog.push(this.moveService.toAlgebraicNotation(move));
           this.startingCoordinates = [];
           this.endingCoordinates = [];
