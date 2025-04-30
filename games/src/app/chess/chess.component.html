@@ -34,7 +34,7 @@
         @if (moveLog.length > 0) {
         <p>Log of moves:</p>
         @for (move of moveLog; track $index) {
-        <div>{{move}}</div>
+        <div>{{$index+1}}-{{move}}</div>
         }
         }
     </section>
