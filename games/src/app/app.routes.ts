@@ -15,7 +15,7 @@ export const routes: Routes = [
     {path: 'rock-paper-scissors-lizard-spock', component: RockPaperScissorsLizardSpockComponent},
     {path: 'tic-tac-toe', component: TicTacToeComponent},
     {path: 'connect-four', component: ConnectFourComponent},
-    {path: 'game-of-15', component: GameOfFifteenComponent},
+    {path: 'game-of-fifteen', component: GameOfFifteenComponent},
     {path: 'checkers', component: CheckersComponent},
     {path: 'chess', component: ChessComponent},
     {path: 'go', component: GoComponent},
