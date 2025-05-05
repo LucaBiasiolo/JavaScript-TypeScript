@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ChessPiece } from './beans/pieces/ChessPiece';
 import { MoveService } from './move.service';
 import { Move } from './beans/Move';
-import { BoardService } from './board.service';
+import { ChessBoardService } from './chess-board.service';
 import { PieceColor } from '../PieceColor';
 import { ChessBoard } from './beans/ChessBoard';
 
@@ -24,7 +24,7 @@ export class ChessComponent {
   moveLog: string[] = []
   pieceToDrag: ChessPiece | undefined = undefined;
 
-  constructor(private moveService: MoveService, private boardService: BoardService) { }
+  constructor(private moveService: MoveService, private boardService: ChessBoardService) { }
 
   public onDragStart(row: number, column: number) {
     if (this.board[row][column]) {

@@ -5,7 +5,7 @@ import { ChessPiece } from './beans/pieces/ChessPiece';
 @Injectable({
   providedIn: 'root'
 })
-export class BoardService {
+export class ChessBoardService {
 
   constructor() { }
 
