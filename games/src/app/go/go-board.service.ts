@@ -146,8 +146,8 @@ export class GoBoardService {
     return undefined;
   }
 
-  public translateMoveIntoString(row: number, column: number, board: (Stone | undefined)[][]): string {
-    let stringRow: string = `${board.length - row}`;
+  public translateMoveIntoString(row: number, column: number, boardDimension: number): string {
+    let stringRow: string = `${boardDimension - row}`;
     let stringColumn: string = this.columnLetters[column];
 
     return stringColumn + stringRow;

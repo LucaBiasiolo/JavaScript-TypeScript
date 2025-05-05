@@ -14,7 +14,7 @@ export class PlayerService {
   public placeStone(row: number, column: number, player: Player, board: (Stone|undefined)[][]): boolean {
     if (this.boardService.isStonePlaceable(row, column, player.color,board)) {
       board[row][column] = new Stone(player.color);
-      player.moveLog.push(this.boardService.translateMoveIntoString(row, column,board))
+      player.moveLog.push(this.boardService.translateMoveIntoString(row, column,board.length))
       return true;
     }
     return false;
