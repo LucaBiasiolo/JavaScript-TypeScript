@@ -1,6 +1,6 @@
 <h2>Game of Go</h2>
-<p>Welcome to the game of Go! Choose the board dimension</p>
 <div><cite>The world is like a go game whose rules were uselessly complicated (Chinese proverb)</cite></div>
+<p>Welcome to the game of Go! Choose the board dimension</p>
 <mat-form-field>
     <mat-label>Board dimension</mat-label>
     <mat-select [(value)]="boardDimension">
@@ -9,7 +9,8 @@
         <mat-option [value]="19">19x19</mat-option>
     </mat-select>
 </mat-form-field>
-<button mat-raised-button type="button" (click)="resetBoard()">Reset board</button>
+<div><button mat-raised-button type="button" (click)="resetBoard()">Reset game</button></div>
+<p>{{activePlayer.color}} player, it's your turn</p>
 <section class="go-board-moveLog-container">
     <section class="go-board">
         <div>
@@ -28,6 +29,10 @@
         </div>
         }
     </section>
+    <button mat-raised-button type="button" (click)="pass()">Pass</button>
+    @if (gameEnded) {
+        <p>Game Ended</p>
+    }
     <section class="moveLog">
         @if (moveLog.length > 0) {
         <p>Log of moves:</p>
