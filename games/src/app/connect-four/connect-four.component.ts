@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ConnectFourService } from './connect-four.service';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-connect-four',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './connect-four.component.html',
   styleUrl: './connect-four.component.css'
 })

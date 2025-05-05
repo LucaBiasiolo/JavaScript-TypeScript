@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RockPaperScissorsService } from './rock-paper-scissors.service';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-rock-paper-scissors',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './rock-paper-scissors.component.html',
   styleUrl: './rock-paper-scissors.component.css'
 })

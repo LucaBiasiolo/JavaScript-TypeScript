@@ -1,0 +1,18 @@
+<h1>Angular games</h1>
+<p>Welcome to angular games! These games were developed by Luca Biasiolo (<a href="https://github.com/LucaBiasiolo">https://github.com/LucaBiasiolo</a>) as side projects for self-learning Java and Angular, with the aim to become a better full-stack developer. As such, only some games are fully playable and many have bugs or features that are not fully developed.</p>
+<p>Please choose which game you want to play</p>
+<mat-form-field>
+    <mat-label>Game</mat-label>
+    <mat-select>
+        <mat-option routerLink="/rock-paper-scissors" routerLinkActive="active">Rock-Paper-Scissors</mat-option>
+        <mat-option routerLink="/rock-paper-scissors-lizard-spock"
+            routerLinkActive="active">Rock-Paper-Scissors-Lizard-Spock</mat-option>
+        <mat-option routerLink="/tic-tac-toe" routerLinkActive="active">Tic-Tac-Toe</mat-option>
+        <mat-option routerLink="/connect-four" routerLinkActive="active">Connect Four</mat-option>
+        <mat-option routerLink="/game-of-15" routerLinkActive="active">Game of 15</mat-option>
+        <mat-option routerLink="/checkers" routerLinkActive="active">Checkers</mat-option>
+        <mat-option routerLink="/chess" routerLinkActive="active">Chess</mat-option>
+        <mat-option routerLink="/go" routerLinkActive="active">Go</mat-option>
+        <mat-option routerLink="/backgammon" routerLinkActive="active">backgammon</mat-option>
+    </mat-select>
+</mat-form-field>

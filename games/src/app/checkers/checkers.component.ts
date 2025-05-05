@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-checkers',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './checkers.component.html',
   styleUrl: './checkers.component.css'
 })

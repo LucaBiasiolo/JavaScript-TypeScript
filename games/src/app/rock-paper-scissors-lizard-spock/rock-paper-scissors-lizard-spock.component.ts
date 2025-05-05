@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { RockPaperScissorsLizardSpockService } from './rock-paper-scissors-lizard-spock.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-rock-paper-scissors-lizard-spock',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './rock-paper-scissors-lizard-spock.component.html',
   styleUrl: './rock-paper-scissors-lizard-spock.component.css'
 })

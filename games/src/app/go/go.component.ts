@@ -7,10 +7,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { PlayerService } from './Player.service';
 import { Player } from './Player';
 import { GoBoardService } from './go-board.service';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
    selector: 'app-go',
-   imports: [MatButtonModule, MatSelectModule, MatOptionModule],
+   imports: [MatButtonModule, MatSelectModule, MatOptionModule, MatIconModule, RouterModule],
    templateUrl: './go.component.html',
    styleUrl: './go.component.css'
 })

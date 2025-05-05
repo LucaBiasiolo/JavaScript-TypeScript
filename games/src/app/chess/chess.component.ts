@@ -6,10 +6,12 @@ import { Move } from './beans/Move';
 import { ChessBoardService } from './chess-board.service';
 import { PieceColor } from '../PieceColor';
 import { ChessBoard } from './beans/ChessBoard';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-chess',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule,MatIconModule, RouterModule],
   templateUrl: './chess.component.html',
   styleUrl: './chess.component.css'
 })

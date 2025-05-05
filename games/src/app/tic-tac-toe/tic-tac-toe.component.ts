@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TicTacToeService } from './tic-tac-toe.service';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tic-tac-toe',
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './tic-tac-toe.component.html',
   styleUrl: './tic-tac-toe.component.css'
 })
