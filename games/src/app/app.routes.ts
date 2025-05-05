@@ -7,6 +7,7 @@ import { GameOfFifteenComponent } from './game-of-fifteen/game-of-fifteen.compon
 import { CheckersComponent } from './checkers/checkers.component';
 import { ChessComponent } from './chess/chess.component';
 import { GoComponent } from './go/go.component';
+import { BackgammonComponent } from './backgammon/backgammon.component';
 
 export const routes: Routes = [
     {path: 'rock-paper-scissors', component: RockPaperScissorsComponent},
@@ -16,6 +17,7 @@ export const routes: Routes = [
     {path: 'game-of-15', component: GameOfFifteenComponent},
     {path: 'checkers', component: CheckersComponent},
     {path: 'chess', component: ChessComponent},
-    {path: 'go', component: GoComponent}
+    {path: 'go', component: GoComponent},
+    {path: 'backgammon',component: BackgammonComponent}
 ];
 // todo: add path for Home component and Page not found wildcard
