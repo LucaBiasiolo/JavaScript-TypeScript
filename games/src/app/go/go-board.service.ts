@@ -16,21 +16,21 @@ export class GoBoardService {
   public checkBoard(board: (Stone | undefined)[][]) { }
 
   // todo: improve encapsulation of this method
-  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone|undefined)[][]): boolean {
+  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
     if (!board[row][column]) {
-      let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column,board);
+      let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, board);
       let adjacentStonesColors: PieceColor[] = adjacentStones.map(stone => stone.getColor());
 
-      return adjacentStonesColors.includes(playerColor) || this.hasStoneALiberty(row, column, adjacentStones,board);
+      return adjacentStonesColors.includes(playerColor) || this.hasStoneALiberty(row, column, adjacentStones, board);
     }
     return false;
   }
 
-  private getAdjacentStonesByMatrixCoordinates(row: number, column: number, board: (Stone|undefined)[][]): Stone[] {
+  private getAdjacentStonesByMatrixCoordinates(row: number, column: number, board: (Stone | undefined)[][]): Stone[] {
     let upperStone: Stone | undefined = this.getStoneByMatrixCoordinates(row - 1, column, board);
-    let lowerStone: Stone | undefined = this.getStoneByMatrixCoordinates(row + 1, column,board);
-    let rightStone: Stone | undefined = this.getStoneByMatrixCoordinates(row, column + 1,board);
-    let leftStone: Stone | undefined = this.getStoneByMatrixCoordinates(row, column - 1,board);
+    let lowerStone: Stone | undefined = this.getStoneByMatrixCoordinates(row + 1, column, board);
+    let rightStone: Stone | undefined = this.getStoneByMatrixCoordinates(row, column + 1, board);
+    let leftStone: Stone | undefined = this.getStoneByMatrixCoordinates(row, column - 1, board);
 
     let adjacentStones: Stone[] = [];
     if (upperStone) adjacentStones.push(upperStone);
@@ -41,7 +41,7 @@ export class GoBoardService {
     return adjacentStones;
   }
 
-  private getStoneByMatrixCoordinates(row: number, column: number, board:(Stone|undefined)[][]): Stone | undefined {
+  private getStoneByMatrixCoordinates(row: number, column: number, board: (Stone | undefined)[][]): Stone | undefined {
     try {
       return board[row][column];
     } catch (error: any) {
@@ -49,7 +49,7 @@ export class GoBoardService {
     }
   }
 
-  public hasStoneALiberty(row: number, column: number, adjacentStones: (Stone|undefined)[],board:(Stone|undefined)[][]): boolean {
+  public hasStoneALiberty(row: number, column: number, adjacentStones: (Stone | undefined)[], board: (Stone | undefined)[][]): boolean {
     if (row == 0 || row == board.length - 1 || column == 0 || column == board.length - 1) { // stone on a border
       if ((row == 0 && column == 0) || (row == board.length - 1 && column == 0) ||
         (row == 0 && column == board.length - 1) ||
@@ -63,22 +63,21 @@ export class GoBoardService {
     return adjacentStones.length < 4;
   }
 
-  public isGroupAlive(startingStone: Stone,board: (Stone|undefined)[][]): boolean {
-    let group: Stone[] = this.findGroup(startingStone, undefined,board);
+  public isGroupAlive(group: Stone[], board: (Stone | undefined)[][]): boolean {
     for (const stoneOfGroup of group) {
-      let stoneOfGroupCoordinates: MatrixCoordinates|undefined = this.getStoneMatrixCoordinates(stoneOfGroup,board);
-      if (!stoneOfGroupCoordinates){
+      let stoneOfGroupCoordinates: MatrixCoordinates | undefined = this.getStoneMatrixCoordinates(stoneOfGroup, board);
+      if (!stoneOfGroupCoordinates) {
         continue;
       }
-      let adjacentStones: (Stone|undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(),board);
-      if(this.hasStoneALiberty(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(), adjacentStones, board)){
+      let adjacentStones: (Stone | undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(), board);
+      if (this.hasStoneALiberty(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(), adjacentStones, board)) {
         return true;
       }
     }
     return false;
   }
 
-  public findGroup(startingStone: Stone, visited: Set<Stone> | undefined,board: (Stone|undefined)[][]): Stone[] {
+  public findGroup(startingStone: Stone, visited: Set<Stone> | undefined, board: (Stone | undefined)[][]): Stone[] {
     const group: Stone[] = [];
     if (!visited) {
       visited = new Set<Stone>();
@@ -89,11 +88,11 @@ export class GoBoardService {
     visited.add(startingStone);
     group.push(startingStone);
 
-    const startingStoneCoordinates = this.getStoneMatrixCoordinates(startingStone,board);
+    const startingStoneCoordinates = this.getStoneMatrixCoordinates(startingStone, board);
     if (!startingStoneCoordinates) {
       return group; // Return the group if coordinates are undefined
     }
-    
+
     const adjacentStones = this.getAdjacentStonesByMatrixCoordinates(
       startingStoneCoordinates.getRowIndex(),
       startingStoneCoordinates.getColumnIndex(),
@@ -105,35 +104,38 @@ export class GoBoardService {
     );
 
     for (const stoneOfGroup of adjacentGroup) {
-      group.push(...this.findGroup(stoneOfGroup, visited,board)); // Pass the visited set recursively
+      group.push(...this.findGroup(stoneOfGroup, visited, board)); // Pass the visited set recursively
     }
     return group;
   }
 
-  public removeDeadStones(blackPlayer: Player, whitePlayer: Player,board:(Stone|undefined)[][]): boolean {
-    let boardChanged = false;
+  public removeDeadStones(blackPlayer: Player, whitePlayer: Player, board: (Stone | undefined)[][]) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j] !== undefined) {
-          const isStoneOrGroupAlive = this.isGroupAlive(board[i][j]!,board);
+        if (board[i][j]) {
+          const group: Stone[] = this.findGroup(board[i][j]!, undefined, board);
+          const isStoneOrGroupAlive: boolean = this.isGroupAlive(group, board);
           if (!isStoneOrGroupAlive) {
-            const stoneToRemove = board[i][j]!;
-            const stoneColor = stoneToRemove.getColor();
-            if (stoneColor === PieceColor.WHITE) {
-              blackPlayer.score = blackPlayer.score + 1
-            } else {
-              whitePlayer.score =whitePlayer.score + 1
+            for (const stoneToRemove of group) {
+              const stoneToRemoveMatrixCoordinates: MatrixCoordinates | undefined = this.getStoneMatrixCoordinates(stoneToRemove, board);
+              if (!stoneToRemoveMatrixCoordinates){
+                continue;
+              }
+              const stoneColor = stoneToRemove.getColor();
+              if (stoneColor === PieceColor.WHITE) {
+                blackPlayer.score = blackPlayer.score + 1
+              } else {
+                whitePlayer.score = whitePlayer.score + 1
+              }
+              board[stoneToRemoveMatrixCoordinates.getRowIndex()][stoneToRemoveMatrixCoordinates.getColumnIndex()] = undefined;
             }
-            board[i][j] = undefined;
-            boardChanged = true;
           }
         }
       }
     }
-    return boardChanged;
   }
 
-  public getStoneMatrixCoordinates(stone: Stone,board:(Stone|undefined)[][]): MatrixCoordinates | undefined {
+  public getStoneMatrixCoordinates(stone: Stone, board: (Stone | undefined)[][]): MatrixCoordinates | undefined {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         if (board[i][j] !== undefined && board[i][j] === stone) {
@@ -144,10 +146,10 @@ export class GoBoardService {
     return undefined;
   }
 
-public translateMoveIntoString(row: number, column: number,board:(Stone|undefined)[][]): string {
-      let stringRow: string = `${board.length - row}`;
-      let stringColumn: string = this.columnLetters[column];
+  public translateMoveIntoString(row: number, column: number, board: (Stone | undefined)[][]): string {
+    let stringRow: string = `${board.length - row}`;
+    let stringColumn: string = this.columnLetters[column];
 
-      return stringColumn + stringRow;
-   }
+    return stringColumn + stringRow;
+  }
 }
