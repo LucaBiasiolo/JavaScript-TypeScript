@@ -49,7 +49,7 @@ export class GoBoardService {
     }
   }
 
-  public hasStoneALiberty(row: number, column: number, adjacentStones: Stone[],board:(Stone|undefined)[][]): boolean {
+  public hasStoneALiberty(row: number, column: number, adjacentStones: (Stone|undefined)[],board:(Stone|undefined)[][]): boolean {
     if (row == 0 || row == board.length - 1 || column == 0 || column == board.length - 1) { // stone on a border
       if ((row == 0 && column == 0) || (row == board.length - 1 && column == 0) ||
         (row == 0 && column == board.length - 1) ||
@@ -71,7 +71,7 @@ export class GoBoardService {
         continue;
       }
       let adjacentStones: (Stone|undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(),board);
-      if (adjacentStones.includes(undefined)) {
+      if(this.hasStoneALiberty(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(), adjacentStones, board)){
         return true;
       }
     }
