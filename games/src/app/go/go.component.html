@@ -9,20 +9,31 @@
         <mat-option [value]="19">19x19</mat-option>
     </mat-select>
 </mat-form-field>
-<button mat-raised-button type="button" (click)="recreateBoard()">Recreate board</button>
-<div>
-    <button mat-fab disabled></button>
-    @for (columnLetter of columnLetters; track $index) {
-        @if ($index < boardDimension) {
-        <button mat-fab disabled>{{columnLetter}}</button>
+<button mat-raised-button type="button" (click)="resetBoard()">Reset board</button>
+<section class="go-board-moveLog-container">
+    <section class="go-board">
+        <div>
+            <button mat-fab disabled></button>
+            @for (columnLetter of columnLetters; track $index) {
+            @if ($index < boardDimension) { <button mat-fab disabled>{{columnLetter}}</button>
+                }
+                }
+        </div>
+        @for (row of board; track $index; let i = $index) {
+        <div>
+            <button mat-fab disabled>{{boardDimension - i}}</button>
+            @for (column of row; track $index; let j = $index ) {
+            <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
+            }
+        </div>
+        }
+    </section>
+    <section class="moveLog">
+        @if (moveLog.length > 0) {
+        <p>Log of moves:</p>
+        @for (move of moveLog; track $index) {
+        <div>{{$index+1}}-{{move}}</div>
         }
         }
-</div>
-@for (row of board; track $index; let i = $index) {
-<div>
-    <button mat-fab disabled>{{boardDimension - i}}</button>
-    @for (column of row; track $index; let j = $index ) {
-    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
-    }
-</div>
-}
+    </section>
+</section>

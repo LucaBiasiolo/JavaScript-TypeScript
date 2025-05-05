@@ -1,3 +1,11 @@
+.go-board-moveLog-container{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+.moveLog{
+    margin-left: 10px;
+}
 div {
     display: flex;
     justify-content: left;
