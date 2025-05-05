@@ -71,6 +71,7 @@ export class ChessComponent {
       let selectedPiece: ChessPiece = this.board[row][column];
       if (selectedPiece.getColor() === this.activeColor) {
         this.selectedPiece = selectedPiece;
+        this.pieceToRemove = undefined;
         this.startingCoordinates = [row, column];
         this.endingCoordinates = [];
       } else {
