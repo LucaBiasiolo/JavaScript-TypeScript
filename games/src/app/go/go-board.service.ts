@@ -69,8 +69,8 @@ export class GoBoardService {
       if (!stoneOfGroupCoordinates) {
         continue;
       }
-      let adjacentStones: (Stone | undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(), board);
-      if (this.hasStoneALiberty(stoneOfGroupCoordinates.getRowIndex(), stoneOfGroupCoordinates.getColumnIndex(), adjacentStones, board)) {
+      let adjacentStones: (Stone | undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, board);
+      if (this.hasStoneALiberty(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, adjacentStones, board)) {
         return true;
       }
     }
@@ -94,8 +94,8 @@ export class GoBoardService {
     }
 
     const adjacentStones = this.getAdjacentStonesByMatrixCoordinates(
-      startingStoneCoordinates.getRowIndex(),
-      startingStoneCoordinates.getColumnIndex(),
+      startingStoneCoordinates.row,
+      startingStoneCoordinates.column,
       board
     ).filter(stone => stone !== undefined) as Stone[];
 
@@ -127,7 +127,7 @@ export class GoBoardService {
               } else {
                 whitePlayer.score = whitePlayer.score + 1
               }
-              board[stoneToRemoveMatrixCoordinates.getRowIndex()][stoneToRemoveMatrixCoordinates.getColumnIndex()] = undefined;
+              board[stoneToRemoveMatrixCoordinates.row][stoneToRemoveMatrixCoordinates.column] = undefined;
             }
           }
         }

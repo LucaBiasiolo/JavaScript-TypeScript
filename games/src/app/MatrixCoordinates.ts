@@ -1,25 +1,21 @@
 export class MatrixCoordinates {
-  private rowIndex: number;
-  private columnIndex: number;
-
-  constructor(rowIndex: number, columnIndex: number) {
-    this.rowIndex = rowIndex;
-    this.columnIndex = columnIndex;
+  private _row: number;
+  public get row(): number {
+    return this._row;
+  }
+  public set row(value: number) {
+    this._row = value;
+  }
+  private _column: number;
+  public get column(): number {
+    return this._column;
+  }
+  public set column(value: number) {
+    this._column = value;
   }
 
-  public getRowIndex(): number {
-    return this.rowIndex;
-  }
-
-  public setRowIndex(rowIndex: number): void {
-    this.rowIndex = rowIndex;
-  }
-
-  public getColumnIndex(): number {
-    return this.columnIndex;
-  }
-
-  public setColumnIndex(columnIndex: number): void {
-    this.columnIndex = columnIndex;
+  constructor(row: number, column: number) {
+    this._row = row;
+    this._column = column;
   }
 }

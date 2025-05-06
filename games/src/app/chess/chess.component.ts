@@ -50,17 +50,7 @@ export class ChessComponent {
           this.board[row][column] = this.pieceToDrag;
           this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
 
-          let move: Move = new Move(this.pieceToDrag, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
-          if (this.pieceToRemove) {
-            move.isCapture = true;
-          }
-          this.moveLog.push(this.moveService.toAlgebraicNotation(move));
-
-          if (this.activeColor == PieceColor.WHITE) {
-            this.activeColor = PieceColor.BLACK;
-          } else {
-            this.activeColor = PieceColor.WHITE;
-          }
+          this.afterMove(this.pieceToDrag);
         }
       }
     }
@@ -87,20 +77,32 @@ export class ChessComponent {
           this.board[this.startingCoordinates[0]][this.startingCoordinates[1]] = undefined;
           this.board[this.endingCoordinates[0]][this.endingCoordinates[1]] = this.selectedPiece;
 
-          let move: Move = new Move(this.selectedPiece, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
-          if (this.pieceToRemove) {
-            move.isCapture = true;
-          }
-          this.moveLog.push(this.moveService.toAlgebraicNotation(move));
-          this.startingCoordinates = [];
-          this.endingCoordinates = [];
-          if (this.activeColor == PieceColor.WHITE) {
-            this.activeColor = PieceColor.BLACK;
-          } else {
-            this.activeColor = PieceColor.WHITE;
-          }
+          this.afterMove(this.selectedPiece);
         }
       }
+    }
+  }
+
+  private afterMove(pieceMoved: ChessPiece) {
+    let move: Move = new Move(pieceMoved, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
+    const opponentColor: PieceColor = this.activeColor === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+    if (this.boardService.isKingInCheck(opponentColor, this.board)) {
+      move.isCheck = true;
+    }
+    if (this.pieceToRemove) {
+      move.isCapture = true;
+    }
+    this.moveLog.push(this.moveService.toAlgebraicNotation(move));
+    this.startingCoordinates = [];
+    this.endingCoordinates = [];
+    this.switchTurn();
+  }
+
+  private switchTurn(){
+    if (this.activeColor == PieceColor.WHITE) {
+      this.activeColor = PieceColor.BLACK;
+    } else {
+      this.activeColor = PieceColor.WHITE;
     }
   }
 }
