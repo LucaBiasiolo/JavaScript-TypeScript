@@ -14,5 +14,6 @@ export class HomeComponent {
   {name: 'Connect Four', link: 'connect-four'},
   {name: 'Backgammon', link: 'backgammon'},
   {name: 'Game of fifteen', link: 'game-of-fifteen'},
-  {name: 'Tic-tac-toe', link: 'tic-tac-toe'}].sort((game1, game2) => game1.name.localeCompare(game2.name));
+  {name: 'Tic-tac-toe', link: 'tic-tac-toe'},
+  {name: 'Solitaire', link: 'solitaire'}].sort((game1, game2) => game1.name.localeCompare(game2.name));
 }
