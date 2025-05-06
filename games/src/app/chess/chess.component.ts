@@ -8,6 +8,7 @@ import { PieceColor } from '../PieceColor';
 import { ChessBoard } from './beans/ChessBoard';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { Player } from './beans/Player';
 
 @Component({
   selector: 'app-chess',
@@ -17,7 +18,9 @@ import { RouterModule } from '@angular/router';
 })
 export class ChessComponent {
 
-  activeColor: PieceColor = PieceColor.WHITE;
+  whitePlayer: Player = new Player("White Player", PieceColor.WHITE);
+  blackPlayer: Player = new Player("Black Player",PieceColor.BLACK);
+  activePlayer: Player = this.whitePlayer;
   board: (ChessPiece | undefined)[][] = new ChessBoard().board;
   selectedPiece: ChessPiece | undefined = undefined;
   pieceToRemove: ChessPiece | undefined = undefined;
@@ -31,7 +34,7 @@ export class ChessComponent {
   public onDragStart(row: number, column: number) {
     if (this.board[row][column]) {
       let pieceToDrag: ChessPiece = this.board[row][column];
-      if (pieceToDrag.getColor() === this.activeColor) {
+      if (pieceToDrag.getColor() === this.activePlayer.pieceColor) {
         this.pieceToDrag = pieceToDrag;
         this.startingCoordinates = [row, column];
       }
@@ -43,7 +46,7 @@ export class ChessComponent {
     if (this.pieceToDrag?.isMoveValid(this.startingCoordinates[0], this.startingCoordinates[1],
       this.endingCoordinates[0], this.endingCoordinates[1])) {
       if (!this.boardService.isTrajectoryBlocked(this.pieceToDrag, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1], this.board)) {
-        if (!this.board[row][column] || this.board[row][column].getColor() !== this.activeColor) { // the first case is for simple movement, the second for capturing
+        if (!this.board[row][column] || this.board[row][column].getColor() !== this.activePlayer.pieceColor) { // the first case is for simple movement, the second for capturing
           if (this.board[row][column]) {
             this.pieceToRemove = this.board[row][column];
           }
@@ -59,7 +62,7 @@ export class ChessComponent {
   public onClick(row: number, column: number) {
     if (this.board[row][column]) {
       let selectedPiece: ChessPiece = this.board[row][column];
-      if (selectedPiece.getColor() === this.activeColor) {
+      if (selectedPiece.getColor() === this.activePlayer.pieceColor) {
         this.selectedPiece = selectedPiece;
         this.pieceToRemove = undefined;
         this.startingCoordinates = [row, column];
@@ -85,7 +88,7 @@ export class ChessComponent {
 
   private afterMove(pieceMoved: ChessPiece) {
     let move: Move = new Move(pieceMoved, this.startingCoordinates[0], this.startingCoordinates[1], this.endingCoordinates[0], this.endingCoordinates[1]);
-    const opponentColor: PieceColor = this.activeColor === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
+    const opponentColor: PieceColor = this.activePlayer.pieceColor === PieceColor.WHITE ? PieceColor.BLACK : PieceColor.WHITE;
     if (this.boardService.isKingInCheck(opponentColor, this.board)) {
       move.isCheck = true;
     }
@@ -99,10 +102,10 @@ export class ChessComponent {
   }
 
   private switchTurn(){
-    if (this.activeColor == PieceColor.WHITE) {
-      this.activeColor = PieceColor.BLACK;
+    if (this.activePlayer.pieceColor == PieceColor.WHITE) {
+      this.activePlayer = this.blackPlayer
     } else {
-      this.activeColor = PieceColor.WHITE;
+      this.activePlayer = this.whitePlayer;
     }
   }
 }

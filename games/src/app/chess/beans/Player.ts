@@ -11,7 +11,18 @@ export class Player {
         this._name = name;
         this._pieceColor = pieceColor;
     }
-
+    public get name(): string {
+        return this._name;
+    }
+    public set name(value: string) {
+        this._name = value;
+    }
+    public get pieceColor(): PieceColor {
+        return this._pieceColor;
+    }
+    public set pieceColor(value: PieceColor) {
+        this._pieceColor = value;
+    }
     public get moveLog(): string[] {
         return this._moveLog;
     }

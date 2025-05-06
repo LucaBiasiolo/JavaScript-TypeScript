@@ -1,7 +1,7 @@
 <h2>Chess <button mat-mini-fab routerLink="/" routerLinkActive="active"><mat-icon fontIcon="home" ></mat-icon></button></h2>
 <cite>The game of chess is like a swordfight... You must think first, before you move!</cite>
 <p>This is a game for two human players. The computer will handle the game rules</p>
-<p>{{activeColor}} player, it's your turn</p>
+<p>{{activePlayer.pieceColor}} player, it's your turn</p>
 <section class="chessboard-moveLog-container">
     <section class="chessboard">
         @for (row of board; track $index; let i = $index) {
