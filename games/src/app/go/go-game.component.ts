@@ -10,10 +10,13 @@ import { RouterModule } from '@angular/router';
 import { Move } from './Move';
 import { MoveService } from './move.service';
 import { GoBoardComponent } from "./go-board/go-board.component";
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
    selector: 'app-go',
-   imports: [MatButtonModule, MatSelectModule, MatOptionModule, MatIconModule, RouterModule, GoBoardComponent],
+   imports: [MatButtonModule, MatSelectModule, MatOptionModule, MatIconModule, RouterModule, GoBoardComponent,MatInputModule,MatFormFieldModule,FormsModule],
    templateUrl: './go-game.component.html',
    styleUrl: './go-game.component.css'
 })
@@ -23,17 +26,24 @@ export class GoGameComponent {
    activePlayer: Player = this.blackPlayer;
    boardDimension: number = 9;   
    moveLog: string[] = [];
+   gameStarted: boolean = false;
    gameEnded: boolean = false;
+   komi: number = 6.5;
 
    constructor(private boardService: GoBoardService, private moveService: MoveService) {
       this.moveLog = moveService.moveLog;
    }
 
-   resetGame() {
+   startGame(){
+      this.gameStarted = true;
+   }
+
+   restartGame() {
+      this.gameStarted = false;
       this.gameEnded = false;
-      //this.board = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
-      this.moveLog = [];
+      this.moveLog = this.moveService.moveLog;
       this.activePlayer = this.blackPlayer;
+      this.gameStarted = true;
    }
 
    public pass() {

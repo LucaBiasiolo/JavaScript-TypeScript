@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
 import { Stone } from '../Stone';
 import { GoBoardService } from '../go-board.service';
 import { MoveService } from '../move.service';
@@ -13,18 +13,22 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './go-board.component.html',
   styleUrl: './go-board.component.css'
 })
-export class GoBoardComponent {
-  @Input({ required: true, alias: 'board-dimension' }) boardDimension: number = 9;
+export class GoBoardComponent implements OnInit{
+  @Input({ required: true, alias: 'board-dimension' }) boardDimension!: number;
   @Input({ required: true, alias: 'game-ended' }) gameEnded: boolean = false;
   @Input({ required: true, alias: 'active-player' }) activePlayer!: Player;
   @Input({ required: true, alias: 'white-player' }) whitePlayer!: Player;
   @Input({ required: true, alias: 'black-player' }) blackPlayer!: Player;
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   columnLetters: string[] = [];
-  board: (Stone | undefined)[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+  board!: (Stone | undefined)[][]
 
   constructor(private boardService: GoBoardService, private moveService: MoveService) {
     this.columnLetters = this.boardService.getColumnLetters();
+  }
+
+  ngOnInit(){
+    this.board =  Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
   }
 
   public placeStone(row: number, column: number) {
