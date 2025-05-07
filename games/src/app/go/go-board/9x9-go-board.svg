@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" wiewBox="0 0 500 500">
+  <!-- Background -->
+  <rect width="500" height="500" fill="rgb(220, 179, 92)" />
+
+  <!-- Vertical lines -->
+  <g stroke="black" stroke-width="1">
+    <line x1="50" y1="50" x2="50" y2="450" />
+    <line x1="100" y1="50" x2="100" y2="450" />
+    <line x1="150" y1="50" x2="150" y2="450" />
+    <line x1="200" y1="50" x2="200" y2="450" />
+    <line x1="250" y1="50" x2="250" y2="450" />
+    <line x1="300" y1="50" x2="300" y2="450" />
+    <line x1="350" y1="50" x2="350" y2="450" />
+    <line x1="400" y1="50" x2="400" y2="450" />
+    <line x1="450" y1="50" x2="450" y2="450" />
+  </g>
+
+  <!-- Horizontal lines -->
+  <g stroke="black" stroke-width="1">
+    <line x1="50" y1="50" x2="450" y2="50" />
+    <line x1="50" y1="100" x2="450" y2="100" />
+    <line x1="50" y1="150" x2="450" y2="150" />
+    <line x1="50" y1="200" x2="450" y2="200" />
+    <line x1="50" y1="250" x2="450" y2="250" />
+    <line x1="50" y1="300" x2="450" y2="300" />
+    <line x1="50" y1="350" x2="450" y2="350" />
+    <line x1="50" y1="400" x2="450" y2="400" />
+    <line x1="50" y1="450" x2="450" y2="450" />
+  </g>
+
+  <!-- Star points -->
+  <g fill="black">
+    <circle cx="150" cy="150" r="3px" />
+    <circle cx="150" cy="350" r="3px" />
+    <circle cx="350" cy="150" r="3px" />
+    <circle cx="350" cy="350" r="3px" />
+    <circle cx="250" cy="250" r="3px" />
+  </g>
+
+  <!-- Column coordinates (A to J) -->
+  <g font-family="Arial" font-size="14" fill="black" text-anchor="middle">
+    <text x="50" y="30">A</text>
+    <text x="100" y="30">B</text>
+    <text x="150" y="30">C</text>
+    <text x="200" y="30">D</text>
+    <text x="250" y="30">E</text>
+    <text x="300" y="30">F</text>
+    <text x="350" y="30">G</text>
+    <text x="400" y="30">H</text>
+    <text x="450" y="30">J</text>
+  </g>
+
+  <!-- Row coordinates (9 to 1) -->
+  <g font-family="Arial" font-size="14" fill="black" text-anchor="middle">
+    <text x="30" y="50">9</text>
+    <text x="30" y="100">8</text>
+    <text x="30" y="150">7</text>
+    <text x="30" y="200">6</text>
+    <text x="30" y="250">5</text>
+    <text x="30" y="300">4</text>
+    <text x="30" y="350">3</text>
+    <text x="30" y="400">2</text>
+    <text x="30" y="450">1</text>
+  </g>
+</svg>

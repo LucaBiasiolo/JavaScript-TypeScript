@@ -128,15 +128,4 @@
             fill="rgba(0, 0, 0, 0.75)">3</text><text x="472" y="429" font-size="12px" font-weight="bold"
             fill="rgba(0, 0, 0, 0.75)">2</text><text x="472" y="452" font-size="12px" font-weight="bold"
             fill="rgba(0, 0, 0, 0.75)">1</text></g>
-    <g class="shadow-layer"></g>
-    <g class="clickable-intersections">
-        @for(intersection of intersections; track $index){
-            <circle 
-                [attr.cx]="intersection.x" 
-                [attr.cy]="intersection.y" 
-                r="5" 
-                fill="red" 
-                (click)="handleIntersectionClick(intersection)"></circle>
-        }
-    </g>
 </svg>
