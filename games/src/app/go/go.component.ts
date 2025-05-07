@@ -4,11 +4,12 @@ import { PieceColor } from '../PieceColor';
 import { Stone } from './Stone';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { PlayerService } from './Player.service';
 import { Player } from './Player';
 import { GoBoardService } from './go-board.service';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { Move } from './Move';
+import { MoveService } from './move.service';
 
 @Component({
    selector: 'app-go',
@@ -23,20 +24,26 @@ export class GoComponent {
    boardDimension: number = 9;
    moveLog: string[] = [];
    board: (Stone | undefined)[][] = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
-   columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
+   columnLetters: string[] = [];
    gameEnded: boolean = false;
 
-   constructor(private playerService: PlayerService, private boardService: GoBoardService) { }
+   constructor(private boardService: GoBoardService, private moveService: MoveService) {
+      this.columnLetters = this.boardService.getColumnLetters();
+   }
 
-   resetBoard() {
+   resetGame() {
       this.gameEnded = false;
       this.board = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+      this.moveLog = [];
+      this.activePlayer = this.blackPlayer;
    }
 
    public placeStone(row: number, column: number) {
       if (!this.gameEnded) {
-         let placed: boolean = this.playerService.placeStone(row, column, this.activePlayer, this.board);
-         if (placed) {
+         if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board)) {
+            this.board[row][column] = new Stone(this.activePlayer.color);
+            let move: Move = new Move(row, column, this.activePlayer.color, false);
+            this.moveLog.push(this.moveService.translateMoveIntoString(move, this.boardDimension));
             this.activePlayer.hasPassed = false;
             this.boardService.removeDeadStones(this.blackPlayer, this.whitePlayer, this.board);
             this.switchTurn();
@@ -46,6 +53,8 @@ export class GoComponent {
 
    public pass() {
       this.activePlayer.hasPassed = true;
+      let move: Move = new Move(undefined, undefined, this.activePlayer.color, true);
+      this.moveLog.push(this.moveService.translateMoveIntoString(move, this.boardDimension));
       this.gameEnded = this.blackPlayer.hasPassed && this.whitePlayer.hasPassed;
       this.switchTurn()
    }

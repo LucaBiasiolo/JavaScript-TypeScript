@@ -13,16 +13,33 @@ export class GoBoardService {
 
   constructor() { }
 
-  public checkBoard(board: (Stone | undefined)[][]) { }
+  public getColumnLetters():string[]{
+    return this.columnLetters;
+  }
+
+  public getColumnLetter(column: number): string {
+    return this.columnLetters[column];
+  }
 
   // todo: improve encapsulation of this method
   public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
     if (!board[row][column]) {
       let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, board);
-      let adjacentStonesColors: PieceColor[] = adjacentStones.map(stone => stone.getColor());
+      let adjacentColors: PieceColor[] = adjacentStones.map(stone => stone.getColor());
 
-      return adjacentStonesColors.includes(playerColor) || this.hasStoneALiberty(row, column, adjacentStones, board);
+      // todo: permit stone placement even when it wouldn't have liberties if the placement permits a capture (ex. ko situation)
+      // todo: player cannot place stone to suicide their group
+      return adjacentColors.includes(playerColor) || this.isStoneAlive(row, column, adjacentStones, board) || this.movePermitsACapture(row, column, board) && this.moveIsNotSuicidal(row, column, board);
     }
+    return false;
+  }
+
+  private movePermitsACapture(row: number, column: number, board: (Stone | undefined)[][]): boolean {
+
+    return false;
+  }
+
+  private moveIsNotSuicidal(row: number, column: number, board: (Stone | undefined)[][]): boolean {
     return false;
   }
 
@@ -49,7 +66,7 @@ export class GoBoardService {
     }
   }
 
-  public hasStoneALiberty(row: number, column: number, adjacentStones: (Stone | undefined)[], board: (Stone | undefined)[][]): boolean {
+  public isStoneAlive(row: number, column: number, adjacentStones: (Stone | undefined)[], board: (Stone | undefined)[][]): boolean {
     if (row == 0 || row == board.length - 1 || column == 0 || column == board.length - 1) { // stone on a border
       if ((row == 0 && column == 0) || (row == board.length - 1 && column == 0) ||
         (row == 0 && column == board.length - 1) ||
@@ -70,7 +87,7 @@ export class GoBoardService {
         continue;
       }
       let adjacentStones: (Stone | undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, board);
-      if (this.hasStoneALiberty(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, adjacentStones, board)) {
+      if (this.isStoneAlive(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, adjacentStones, board)) {
         return true;
       }
     }
@@ -118,7 +135,7 @@ export class GoBoardService {
           if (!isStoneOrGroupAlive) {
             for (const stoneToRemove of group) {
               const stoneToRemoveMatrixCoordinates: MatrixCoordinates | undefined = this.getStoneMatrixCoordinates(stoneToRemove, board);
-              if (!stoneToRemoveMatrixCoordinates){
+              if (!stoneToRemoveMatrixCoordinates) {
                 continue;
               }
               const stoneColor = stoneToRemove.getColor();
@@ -144,12 +161,5 @@ export class GoBoardService {
       }
     }
     return undefined;
-  }
-
-  public translateMoveIntoString(row: number, column: number, boardDimension: number): string {
-    let stringRow: string = `${boardDimension - row}`;
-    let stringColumn: string = this.columnLetters[column];
-
-    return stringColumn + stringRow;
   }
 }
