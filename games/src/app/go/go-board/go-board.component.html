@@ -1,45 +1,43 @@
-<section class="go-board">
-    <div>
-        <button mat-fab disabled></button>
-        @for (columnLetter of columnLetters; track $index) {
-        @if ($index < boardDimension) { <button mat-fab disabled>{{columnLetter}}</button>
-            }
-            }
-    </div>
-    @for (row of board; track $index; let i = $index) {
-    <div>
-        <button mat-fab disabled>{{boardDimension - i}}</button>
-        @for (column of row; track $index; let j = $index ) {
-        @if (i==0 || i == boardDimension-1) {
-        @if (i==0 && j==0){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┏'}}</button>
-        }
-        @else if (i==0 && j==boardDimension-1){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┓'}}</button>
-        }
-        @else if (i== boardDimension-1 && j==0){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┗'}}</button>
-        }
-        @else if (i==boardDimension-1 && j== boardDimension-1){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┛'}}</button>
-        }
-        @else if (i==0){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┳'}}</button>
-        }
-        @else if (i==boardDimension-1){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┻'}}</button>
+<div>
+    <button mat-fab disabled></button>
+    @for (columnLetter of columnLetters; track $index) {
+    @if ($index < boardDimension) { <button mat-fab disabled>{{columnLetter}}</button>
         }
         }
-        @else if (j==0){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┣'}}</button>
-        }
-        @else if (j==boardDimension -1){
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┫'}}</button>
-        }
-        @else{
-        <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
-        }
-        }
-    </div>
+</div>
+@for (row of board; track $index; let i = $index) {
+<div>
+    <button mat-fab disabled>{{boardDimension - i}}</button>
+    @for (column of row; track $index; let j = $index ) {
+    @if (i==0 || i == boardDimension-1) {
+    @if (i==0 && j==0){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┏'}}</button>
     }
-</section>
+    @else if (i==0 && j==boardDimension-1){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┓'}}</button>
+    }
+    @else if (i== boardDimension-1 && j==0){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┗'}}</button>
+    }
+    @else if (i==boardDimension-1 && j== boardDimension-1){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┛'}}</button>
+    }
+    @else if (i==0){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┳'}}</button>
+    }
+    @else if (i==boardDimension-1){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┻'}}</button>
+    }
+    }
+    @else if (j==0){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┣'}}</button>
+    }
+    @else if (j==boardDimension -1){
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '┫'}}</button>
+    }
+    @else{
+    <button mat-fab (click)="placeStone(i,j)">{{board[i][j] ? board[i][j] : '╋'}}</button>
+    }
+    }
+</div>
+}

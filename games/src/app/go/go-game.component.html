@@ -12,7 +12,7 @@
 <div><button mat-raised-button type="button" (click)="resetGame()">Reset game</button></div>
 <p>{{activePlayer.color}} player, it's your turn</p>
 <section class="go-board-moveLog-container">
-    <app-go-board class="go-board" [board-dimension]="boardDimension" [game-ended]="gameEnded" [active-player]="activePlayer" [white-player]="whitePlayer" [black-player]="blackPlayer" (placedStoneEvent)="switchTurn()"></app-go-board>
+    <app-go-board [board-dimension]="boardDimension" [game-ended]="gameEnded" [active-player]="activePlayer" [white-player]="whitePlayer" [black-player]="blackPlayer" (placedStoneEvent)="switchTurn()"></app-go-board>
     <button mat-raised-button type="button" (click)="pass()">Pass</button>
     @if (gameEnded) {
     <p>Game Ended</p>
@@ -26,7 +26,8 @@
         }
     </section>
     <section class="score">
-        <p>Black player score: {{blackPlayer.score}}</p>
-        <p>White player score: {{whitePlayer.score + 6.5}} (of which 6.5 komi)</p>
+        <p><b>Score:</b></p>
+        <p>Black player: {{blackPlayer.score}}</p>
+        <p>White player: {{whitePlayer.score + 6.5}} (of which 6.5 komi)</p>
     </section>
 </section>

@@ -1,3 +1,8 @@
+div {
+    display: flex;
+    justify-content: left;
+    align-items:start;
+}
 button[mat-fab] {
     background-color: rgb(220, 179, 92);
     width: 50px;
