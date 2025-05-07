@@ -8,6 +8,8 @@ import { Move } from './Move';
 })
 export class MoveService {
 
+  private _moveLog: string[] = [];
+  
   constructor(private boardService: GoBoardService) { }
 
   public translateMoveIntoString(move: Move, boardDimension: number): string {
@@ -20,5 +22,12 @@ export class MoveService {
 
       return stoneUnicode + stringColumn + stringRow;
     }
+  }
+
+  public get moveLog(): string[] {
+    return this._moveLog;
+  }
+  public set moveLog(value: string[]) {
+    this._moveLog = value;
   }
 }

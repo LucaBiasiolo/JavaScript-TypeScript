@@ -6,7 +6,7 @@ import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { GameOfFifteenComponent } from './game-of-fifteen/game-of-fifteen.component';
 import { CheckersComponent } from './checkers/checkers.component';
 import { ChessComponent } from './chess/chess.component';
-import { GoComponent } from './go/go.component';
+import { GoGameComponent } from './go/go-game.component';
 import { BackgammonComponent } from './backgammon/backgammon.component';
 import { HomeComponent } from './home/home.component';
 import { SolitaireComponent } from './solitaire/solitaire.component';
@@ -19,10 +19,10 @@ export const routes: Routes = [
     {path: 'game-of-fifteen', component: GameOfFifteenComponent},
     {path: 'checkers', component: CheckersComponent},
     {path: 'chess', component: ChessComponent},
-    {path: 'go', component: GoComponent},
+    {path: 'go', component: GoGameComponent},
     {path: 'backgammon',component: BackgammonComponent},
     {path: 'home', component: HomeComponent},
     {path: 'solitaire', component: SolitaireComponent},
     {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
-// todo: add path for Home component and Page not found wildcard
+// todo: add Page not found wildcard

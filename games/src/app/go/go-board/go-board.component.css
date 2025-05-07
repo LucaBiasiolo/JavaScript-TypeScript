@@ -1,0 +1,13 @@
+button[mat-fab] {
+    background-color: rgb(220, 179, 92);
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    box-shadow: none;
+    border-radius: 0%;
+    color: black;
+}
+button[disabled]{
+    font-size: 20px;
+    background-color: transparent;
+}
