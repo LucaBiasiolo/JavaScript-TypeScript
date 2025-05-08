@@ -23,10 +23,10 @@ export class GoBoardComponent implements OnInit{
   columnLetters: string[] = [];
   board!: (Stone | undefined)[][];
   intersections: {x: number, y:number}[] =[];
+  svgDimension!: number;
 
   constructor(private boardService: GoBoardService, private moveService: MoveService) {
     this.columnLetters = this.boardService.getColumnLetters();
-
   }
 
   ngOnInit(){
@@ -37,6 +37,7 @@ export class GoBoardComponent implements OnInit{
         this.intersections.push({x: boardPass*i, y: boardPass*j})
       }
     }
+    this.svgDimension = 50*(this.boardDimension+1);
   }
 
   public placeStone(row: number, column: number) {
