@@ -21,17 +21,26 @@ export class GoBoardComponent implements OnInit{
   @Input({ required: true, alias: 'black-player' }) blackPlayer!: Player;
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   columnLetters: string[] = [];
-  board!: (Stone | undefined)[][]
+  board!: (Stone | undefined)[][];
+  intersections: {x: number, y:number}[] =[];
 
   constructor(private boardService: GoBoardService, private moveService: MoveService) {
     this.columnLetters = this.boardService.getColumnLetters();
+
   }
 
   ngOnInit(){
     this.board =  Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+    let boardPass: number = 50;
+    for (let i=1; i<=this.boardDimension; i++){
+      for (let j=1;j<=this.boardDimension;j++){
+        this.intersections.push({x: boardPass*i, y: boardPass*j})
+      }
+    }
   }
 
   public placeStone(row: number, column: number) {
+    console.log('Place stone called')
     if (!this.gameEnded) {
       if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board)) {
         this.board[row][column] = new Stone(this.activePlayer.color);
