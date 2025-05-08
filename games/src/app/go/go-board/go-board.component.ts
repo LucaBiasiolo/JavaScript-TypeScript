@@ -22,7 +22,7 @@ export class GoBoardComponent implements OnInit{
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   columnLetters: string[] = [];
   board!: (Stone | undefined)[][];
-  intersections: {x: number, y:number}[] =[];
+  intersections: {x: number, y:number, color?: string}[] =[];
   svgDimension!: number;
 
   constructor(private boardService: GoBoardService, private moveService: MoveService) {
@@ -40,11 +40,13 @@ export class GoBoardComponent implements OnInit{
     this.svgDimension = 50*(this.boardDimension+1);
   }
 
-  public placeStone(row: number, column: number) {
-    console.log('Place stone called')
+  public placeStone(intersection: {x: number, y: number, color?: string}) {
+    let row: number = intersection.y/50-1
+    let column: number = intersection.x/50-1;
     if (!this.gameEnded) {
       if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board)) {
         this.board[row][column] = new Stone(this.activePlayer.color);
+        intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
         this.moveService.moveLog.push(this.moveService.translateMoveIntoString(move, this.boardDimension));
         this.activePlayer.hasPassed = false;
