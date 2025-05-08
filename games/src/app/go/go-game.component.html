@@ -28,7 +28,9 @@
 </div>
 @if(gameStarted){
 <p>{{activePlayer.color}} player, it's your turn</p>
+@if(!gameEnded){
 <button mat-flat-button type="button" (click)="pass()">Pass</button>
+}
 <section class="go-board-moveLog-container">
     <app-go-board [board-dimension]="boardDimension" [game-ended]="gameEnded" [active-player]="activePlayer"
         [white-player]="whitePlayer" [black-player]="blackPlayer" (placedStoneEvent)="switchTurn()"></app-go-board>

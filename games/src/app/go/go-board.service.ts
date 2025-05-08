@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Stone } from './Stone';
 import { PieceColor } from '../PieceColor';
 import { MatrixCoordinates } from '../MatrixCoordinates';
-import { Player } from './Player';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +24,7 @@ export class GoBoardService {
   public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
     if (!board[row][column]) {
       let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, board);
-      let adjacentColors: PieceColor[] = adjacentStones.map(stone => stone.getColor());
+      let adjacentColors: PieceColor[] = adjacentStones.map(stone => stone.color);
 
       // todo: permit stone placement even when it wouldn't have liberties if the placement permits a capture (ex. ko situation)
       // todo: player cannot place stone to suicide their group
@@ -117,7 +116,7 @@ export class GoBoardService {
     ).filter(stone => stone !== undefined) as Stone[];
 
     const adjacentGroup = adjacentStones.filter(
-      adjacentStone => adjacentStone.getColor() === startingStone.getColor()
+      adjacentStone => adjacentStone.color === startingStone.color
     );
 
     for (const stoneOfGroup of adjacentGroup) {
@@ -126,7 +125,7 @@ export class GoBoardService {
     return group;
   }
 
-  public removeDeadStones(blackPlayer: Player, whitePlayer: Player, board: (Stone | undefined)[][]) {
+  public removeDeadStones(board: (Stone | undefined)[][]): Stone[] | undefined {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         if (board[i][j]) {
@@ -138,18 +137,14 @@ export class GoBoardService {
               if (!stoneToRemoveMatrixCoordinates) {
                 continue;
               }
-              const stoneColor = stoneToRemove.getColor();
-              if (stoneColor === PieceColor.WHITE) {
-                blackPlayer.score = blackPlayer.score + 1
-              } else {
-                whitePlayer.score = whitePlayer.score + 1
-              }
               board[stoneToRemoveMatrixCoordinates.row][stoneToRemoveMatrixCoordinates.column] = undefined;
             }
+            return group;
           }
         }
       }
     }
+    return undefined;
   }
 
   public getStoneMatrixCoordinates(stone: Stone, board: (Stone | undefined)[][]): MatrixCoordinates | undefined {

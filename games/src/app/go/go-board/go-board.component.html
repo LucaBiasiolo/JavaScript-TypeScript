@@ -253,7 +253,7 @@
     }
     <g>
         @for (intersection of intersections; track $index) {
-        <circle class="intersections" [attr.cx]="intersection.x" [attr.cy]="intersection.y" r="22.5" [attr.fill]="board[intersection.y/50-1][intersection.x/50-1] ? board[intersection.y/50-1][intersection.x/50-1]?.getColor() : 'transparent'"
+        <circle class="intersections" [attr.cx]="intersection.x" [attr.cy]="intersection.y" r="22.5" [attr.fill]="board[intersection.y/50-1][intersection.x/50-1] ? board[intersection.y/50-1][intersection.x/50-1]?.color : 'transparent'"
             (click)="placeStone(intersection)" >
         </circle>
         }
