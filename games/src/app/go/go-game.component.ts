@@ -41,9 +41,9 @@ export class GoGameComponent {
    restartGame() {
       this.gameStarted = false;
       this.gameEnded = false;
+      this.moveService.moveLog = [];
       this.moveLog = this.moveService.moveLog;
       this.activePlayer = this.blackPlayer;
-      this.gameStarted = true;
    }
 
    public pass() {
