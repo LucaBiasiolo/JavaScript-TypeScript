@@ -23,24 +23,24 @@ export class GoBoardService {
   // todo: improve encapsulation of this method
   public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
     if (!board[row][column]) {
-      let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, board);
-      let adjacentColors: PieceColor[] = adjacentStones.map(stone => stone.color);
+      const testBoard = board.map(row => [...row])
+      testBoard[row][column] = new Stone(playerColor);
+
+      const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
 
       // todo: implement ko rule
-      // todo: check suicidal moves are not allowed
-      return adjacentColors.includes(playerColor) || this.isStoneAlive(row, column, adjacentStones, board) 
-      || this.movePermitsACapture(row, column, playerColor, adjacentStones, board) 
-      && this.moveIsNotSuicidal(row, column, playerColor, board);
+      return this.isGroupAlive(group, testBoard) || this.movePermitsACapture(row, column, playerColor, board)
     }
     return false;
   }
 
-  private movePermitsACapture(row: number, column: number, playerColor: PieceColor, adjacentStones: Stone[], board: (Stone | undefined)[][]): boolean {
+  private movePermitsACapture(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
 
     const opponentColor: PieceColor = playerColor == PieceColor.BLACK ? PieceColor.WHITE : PieceColor.BLACK;
 
     const testBoard = board.map(row => [...row]) // this is needed to create a deep copy of the board
     testBoard[row][column] = new Stone(playerColor);
+    let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, board);
     for (const adjacentStone of adjacentStones) {
       if (adjacentStone.color === opponentColor) {
         const group = this.findGroup(adjacentStone, undefined, testBoard);
@@ -49,17 +49,6 @@ export class GoBoardService {
         }
       }
     }
-    return false;
-  }
-
-  private moveIsNotSuicidal(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
-    const testBoard = JSON.parse(JSON.stringify(board)); // this is needed to create a deep copy of the board
-    testBoard[row][column] = new Stone(playerColor);
-    const group = this.findGroup(testBoard[row][column], undefined, testBoard);
-    if (!this.isGroupAlive(group, testBoard)){
-      return true;
-    }
-
     return false;
   }
 
