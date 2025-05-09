@@ -43,9 +43,7 @@ export class GoGameComponent {
       this.gameEnded = false;
       this.moveService.moveLog = [];
       this.moveLog = this.moveService.moveLog;
-      this.blackPlayer.score = 0;
       this.blackPlayer.captures = 0;
-      this.whitePlayer.score = 0;
       this.whitePlayer.captures = 0;
       this.activePlayer = this.blackPlayer;
    }

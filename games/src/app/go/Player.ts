@@ -5,7 +5,6 @@ export class Player {
     private _color: PieceColor;
     private _hasPassed: boolean = false;
     private _captures: number = 0;
-    private _score: number = 0;
     private _moveLog: string[] = [];
 
     constructor(name: string, color: PieceColor) {
@@ -43,15 +42,7 @@ export class Player {
     public set hasPassed(value: boolean) {
         this._hasPassed = value;
     }
-
-    public get score(): number {
-        return this._score;
-    }
-
-    public set score(value: number) {
-        this._score = value;
-    }
-    
+        
     public get moveLog(): string[] {
         return this._moveLog;
     }

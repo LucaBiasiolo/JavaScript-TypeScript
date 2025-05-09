@@ -65,9 +65,9 @@ export class GoBoardComponent implements OnInit {
   private updateScores(stonesRemoved: Stone[]) {
     const stoneColor = stonesRemoved[0].color;
     if (stoneColor === PieceColor.WHITE) {
-      this.blackPlayer.score = this.blackPlayer.score + 1
+      this.blackPlayer.captures = this.blackPlayer.captures + 1
     } else {
-      this.whitePlayer.score = this.whitePlayer.score + 1
+      this.whitePlayer.captures = this.whitePlayer.captures + 1
     }
   }
 }
