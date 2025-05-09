@@ -9,7 +9,6 @@ import { MatrixCoordinates } from '../MatrixCoordinates';
 export class GoBoardService {
 
   columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
-
   constructor() { }
 
   public getColumnLetters(): string[] {
@@ -20,27 +19,28 @@ export class GoBoardService {
     return this.columnLetters[column];
   }
 
-  // todo: improve encapsulation of this method
-  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
+  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][], boardPreviousState: (Stone|undefined)[][]): boolean {
     if (!board[row][column]) {
       const testBoard = board.map(row => [...row])
-      testBoard[row][column] = new Stone(playerColor);
-
+      testBoard[row][column] = new Stone(playerColor); //simulate placement of stone
       const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
-
       // todo: implement ko rule
-      return this.isGroupAlive(group, testBoard) || this.movePermitsACapture(row, column, playerColor, board)
+      const isGroupAfterMoveAlive =  this.isGroupAlive(group, testBoard);
+      const movePermitsACapture: boolean = this.movePermitsACapture(row, column, playerColor, testBoard)
+
+      this.removeDeadStones(testBoard, playerColor);
+      const moveViolatesKoRule: boolean = JSON.stringify(testBoard) === JSON.stringify(boardPreviousState);
+      return isGroupAfterMoveAlive || movePermitsACapture && !moveViolatesKoRule;
     }
     return false;
   }
 
-  private movePermitsACapture(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][]): boolean {
+  private movePermitsACapture(row: number, column: number, playerColor: PieceColor, testBoard: (Stone | undefined)[][]): boolean {
 
     const opponentColor: PieceColor = playerColor == PieceColor.BLACK ? PieceColor.WHITE : PieceColor.BLACK;
 
-    const testBoard = board.map(row => [...row]) // this is needed to create a deep copy of the board
     testBoard[row][column] = new Stone(playerColor);
-    let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, board);
+    let adjacentStones: Stone[] = this.getAdjacentStonesByMatrixCoordinates(row, column, testBoard);
     for (const adjacentStone of adjacentStones) {
       if (adjacentStone.color === opponentColor) {
         const group = this.findGroup(adjacentStone, undefined, testBoard);
@@ -135,6 +135,12 @@ export class GoBoardService {
     return group;
   }
 
+  /**
+   * 
+   * @param board 
+   * @param colorOfLastMove 
+   * @returns Group of dead stones removed (for scoring) or undefined if no stone was removed
+   */
   public removeDeadStones(board: (Stone | undefined)[][], colorOfLastMove: PieceColor): Stone[] | undefined {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {

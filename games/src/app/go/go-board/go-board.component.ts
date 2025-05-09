@@ -23,6 +23,7 @@ export class GoBoardComponent implements OnInit {
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   columnLetters: string[] = [];
   board!: (Stone | undefined)[][];
+  boardPreviousState: (Stone|undefined)[][] = [];
   intersections: { x: number, y: number, color?: string }[] = [];
   svgDimension!: number;
 
@@ -45,7 +46,8 @@ export class GoBoardComponent implements OnInit {
     let row: number = intersection.y / 50 - 1
     let column: number = intersection.x / 50 - 1;
     if (!this.gameEnded) {
-      if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board)) {
+      if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board, this.boardPreviousState)) {
+        this.boardPreviousState = this.board.map(row => [...row]); // creates shallow copy of board state before placing stone
         this.board[row][column] = new Stone(this.activePlayer.color);
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
