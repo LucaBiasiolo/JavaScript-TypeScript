@@ -6,9 +6,9 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-solitaire',
   imports: [MatButtonModule, MatIconModule, RouterModule],
-  templateUrl: './solitaire.component.html',
-  styleUrl: './solitaire.component.css'
+  templateUrl: './freecell.component.html',
+  styleUrl: './freecell.component.css'
 })
-export class SolitaireComponent {
+export class FreeCellComponent {
 
 }
