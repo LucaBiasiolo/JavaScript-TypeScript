@@ -51,7 +51,7 @@ export class GoBoardComponent implements OnInit {
         let move: Move = new Move(row, column, this.activePlayer.color, false);
         this.moveService.moveLog.push(this.moveService.translateMoveIntoString(move, this.boardDimension));
         this.activePlayer.hasPassed = false;
-        let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board);
+        let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
         if (stonesRemoved) {
           this.updateScores(stonesRemoved)
         }
