@@ -15,5 +15,6 @@ export class HomeComponent {
   {name: 'Backgammon', link: 'backgammon'},
   {name: 'Game of fifteen', link: 'game-of-fifteen'},
   {name: 'Tic-tac-toe', link: 'tic-tac-toe'},
+  {name: 'Klondike', link: 'Klondike'},
   {name: 'Solitaire', link: 'solitaire'}].sort((game1, game2) => game1.name.localeCompare(game2.name));
 }
