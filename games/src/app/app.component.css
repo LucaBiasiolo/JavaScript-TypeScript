@@ -1,0 +1,4 @@
+h1 a {
+    color: inherit; /* Keeps the color unchanged */
+    text-decoration: none; /* Removes the underline */
+}
