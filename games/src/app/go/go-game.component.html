@@ -1,34 +1,18 @@
-<h2>Go <button mat-mini-fab routerLink="/" routerLinkActive="active"><mat-icon fontIcon="home"></mat-icon></button></h2>
+<h2>Go</h2>
 @if(!gameStarted){
 <div><cite>The world is like a go game whose rules were uselessly complicated (Chinese proverb)</cite></div>
-<p>Choose the game settings</p>
-<section class="board-dimension">
-    <mat-form-field>
-        <mat-label>Board dimension</mat-label>
-        <mat-select [(value)]="boardDimension">
-            <mat-option [value]="9">9x9</mat-option>
-            <mat-option [value]="13">13x13</mat-option>
-            <mat-option [value]="19">19x19</mat-option>
-        </mat-select>
-    </mat-form-field>
-</section>
-<section class="komi">
-    <mat-form-field>
-        <mat-label>Komi</mat-label>
-        <input matInput type="number" [(ngModel)]="komi">
-    </mat-form-field>
-</section>
+<a mat-flat-button routerLink="./new">Start new game</a>
+<a mat-flat-button routerLink="./load">Load Game</a>
 }
 <div>
-    @if(!gameStarted){
-    <button mat-flat-button type="button" (click)="startGame()">Start game</button>
-    } @else {
+    @if(gameStarted){
     <button mat-flat-button type="button" (click)="restartGame()">Restart game</button>
     }
 </div>
 @if(gameStarted){
 <p>{{activePlayer.color}} player, it's your turn</p>
 @if(!gameEnded){
+<button mat-flat-button type="button" (click)="saveGame()">Save Game</button>
 <button mat-flat-button type="button" (click)="pass()">Pass</button>
 }
 <section class="go-board-moveLog-container">

@@ -12,11 +12,10 @@ import { MoveService } from './move.service';
 import { GoBoardComponent } from "./go-board/go-board.component";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
 
 @Component({
    selector: 'app-go',
-   imports: [MatButtonModule, MatSelectModule, MatOptionModule, MatIconModule, RouterModule, GoBoardComponent,MatInputModule,MatFormFieldModule,FormsModule],
+   imports: [MatButtonModule, MatIconModule, RouterModule, GoBoardComponent,MatInputModule,MatFormFieldModule],
    templateUrl: './go-game.component.html',
    styleUrl: './go-game.component.css'
 })
@@ -28,7 +27,6 @@ export class GoGameComponent {
    moveLog: string[] = [];
    gameStarted: boolean = false;
    gameEnded: boolean = false;
-   komi: number = 6.5;
 
    constructor(private boardService: GoBoardService, private moveService: MoveService) {
       this.moveLog = moveService.moveLog;
@@ -36,6 +34,10 @@ export class GoGameComponent {
 
    startGame(){
       this.gameStarted = true;
+   }
+
+   saveGame(){
+
    }
 
    restartGame() {

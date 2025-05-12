@@ -55,14 +55,14 @@ export class GoBoardComponent implements OnInit {
         this.activePlayer.hasPassed = false;
         let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
         if (stonesRemoved) {
-          this.updateScores(stonesRemoved)
+          this.updateCaptures(stonesRemoved)
         }
         this.placedStoneEvent.emit(true);
       }
     }
   }
 
-  private updateScores(stonesRemoved: Stone[]) {
+  private updateCaptures(stonesRemoved: Stone[]) {
     const stoneColor = stonesRemoved[0].color;
     if (stoneColor === PieceColor.WHITE) {
       this.blackPlayer.captures = this.blackPlayer.captures + 1

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Stone } from './Stone';
 import { PieceColor } from '../PieceColor';
 import { MatrixCoordinates } from '../MatrixCoordinates';
+import { FinalScores } from './FinalScores';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class GoBoardService {
       testBoard[row][column] = new Stone(playerColor); //simulate placement of stone
       const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
       // todo: implement ko rule
-      const isGroupAfterMoveAlive =  this.isGroupAlive(group, testBoard);
+      const isGroupAfterMoveAlive =  this.hasGroupLiberties(group, testBoard);
       const movePermitsACapture: boolean = this.movePermitsACapture(row, column, playerColor, testBoard)
 
       this.removeDeadStones(testBoard, playerColor);
@@ -44,7 +45,7 @@ export class GoBoardService {
     for (const adjacentStone of adjacentStones) {
       if (adjacentStone.color === opponentColor) {
         const group = this.findGroup(adjacentStone, undefined, testBoard);
-        if (!this.isGroupAlive(group, testBoard)) {
+        if (!this.hasGroupLiberties(group, testBoard)) {
           return true; // Captures opponent's group
         }
       }
@@ -75,7 +76,7 @@ export class GoBoardService {
     }
   }
 
-  public isStoneAlive(row: number, column: number, adjacentStones: (Stone | undefined)[], board: (Stone | undefined)[][]): boolean {
+  public hasStoneLiberties(row: number, column: number, adjacentStones: (Stone | undefined)[], board: (Stone | undefined)[][]): boolean {
     if (row == 0 || row == board.length - 1 || column == 0 || column == board.length - 1) { // stone on a border
       if ((row == 0 && column == 0) || (row == board.length - 1 && column == 0) ||
         (row == 0 && column == board.length - 1) ||
@@ -89,14 +90,14 @@ export class GoBoardService {
     return adjacentStones.length < 4;
   }
 
-  public isGroupAlive(group: Stone[], board: (Stone | undefined)[][]): boolean {
+  public hasGroupLiberties(group: Stone[], board: (Stone | undefined)[][]): boolean {
     for (const stoneOfGroup of group) {
       let stoneOfGroupCoordinates: MatrixCoordinates | undefined = this.getStoneMatrixCoordinates(stoneOfGroup, board);
       if (!stoneOfGroupCoordinates) {
         continue;
       }
       let adjacentStones: (Stone | undefined)[] = this.getAdjacentStonesByMatrixCoordinates(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, board);
-      if (this.isStoneAlive(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, adjacentStones, board)) {
+      if (this.hasStoneLiberties(stoneOfGroupCoordinates.row, stoneOfGroupCoordinates.column, adjacentStones, board)) {
         return true;
       }
     }
@@ -146,7 +147,7 @@ export class GoBoardService {
       for (let j = 0; j < board[i].length; j++) {
         if (board[i][j] && board[i][j]!.color !== colorOfLastMove) {
           const group: Stone[] = this.findGroup(board[i][j]!, undefined, board);
-          const isStoneOrGroupAlive: boolean = this.isGroupAlive(group, board);
+          const isStoneOrGroupAlive: boolean = this.hasGroupLiberties(group, board);
           if (!isStoneOrGroupAlive) {
             for (const stoneToRemove of group) {
               const stoneToRemoveMatrixCoordinates: MatrixCoordinates | undefined = this.getStoneMatrixCoordinates(stoneToRemove, board);
@@ -172,5 +173,11 @@ export class GoBoardService {
       }
     }
     return undefined;
+  }
+
+  public calculateFinalScores(board: (Stone|undefined)[][]): FinalScores{
+
+    
+    return new FinalScores(0,0);
   }
 }
