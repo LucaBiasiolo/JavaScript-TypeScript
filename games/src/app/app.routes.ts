@@ -28,11 +28,10 @@ export const routes: Routes = [
     {path: 'go/new', component: GoChooseSettingsComponent},
     {path: 'go/load', component: GoLoadGameComponent},
     {path: 'backgammon',component: BackgammonComponent},
-    {path: 'home', component: HomeComponent},
+    {path: '', component: HomeComponent},
     {path: 'freecell', component: FreeCellComponent},
     {path: 'klondike', component: KlondikeComponent},
     {path: 'nine-mens-morris', component: NineMensMorrisComponent},
-    {path: 'domino',component: DominoComponent},
-    {path: '', redirectTo: '/home', pathMatch: 'full'}
+    {path: 'domino',component: DominoComponent}
 ];
 // todo: add Page not found wildcard
