@@ -8,7 +8,7 @@ import { Move } from './Move';
 })
 export class MoveService {
 
-  private _moveLog: string[] = [];
+  private _moveLog: Move[] = [];
   
   constructor(private boardService: GoBoardService) { }
 
@@ -24,10 +24,10 @@ export class MoveService {
     }
   }
 
-  public get moveLog(): string[] {
+  public get moveLog(): Move[] {
     return this._moveLog;
   }
-  public set moveLog(value: string[]) {
+  public set moveLog(value: Move[]) {
     this._moveLog = value;
   }
 }

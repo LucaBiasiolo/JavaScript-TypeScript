@@ -51,23 +51,22 @@ export class GoBoardComponent implements OnInit {
         this.board[row][column] = new Stone(this.activePlayer.color);
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
-        this.moveService.moveLog.push(this.moveService.translateMoveIntoString(move, this.boardDimension));
+        this.moveService.moveLog.push(move);
         this.activePlayer.hasPassed = false;
         let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
         if (stonesRemoved) {
-          this.updateCaptures(stonesRemoved)
+          this.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
         }
         this.placedStoneEvent.emit(true);
       }
     }
   }
 
-  private updateCaptures(stonesRemoved: Stone[]) {
-    const stoneColor = stonesRemoved[0].color;
+  private updateCaptures(stoneColor: PieceColor, howMany: number) {
     if (stoneColor === PieceColor.WHITE) {
-      this.blackPlayer.captures = this.blackPlayer.captures + 1
+      this.blackPlayer.captures = this.blackPlayer.captures + howMany;
     } else {
-      this.whitePlayer.captures = this.whitePlayer.captures + 1
+      this.whitePlayer.captures = this.whitePlayer.captures + howMany;
     }
   }
 }
