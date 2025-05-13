@@ -10,6 +10,9 @@ import { FinalScores } from './FinalScores';
 export class GoBoardService {
 
   columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
+  private _boardDimension: number = 9;
+  private _komi: number = 6.5;
+
   constructor() { }
 
   public getColumnLetters(): string[] {
@@ -20,13 +23,13 @@ export class GoBoardService {
     return this.columnLetters[column];
   }
 
-  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][], boardPreviousState: (Stone|undefined)[][]): boolean {
+  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][], boardPreviousState: (Stone | undefined)[][]): boolean {
     if (!board[row][column]) {
       const testBoard = board.map(row => [...row])
       testBoard[row][column] = new Stone(playerColor); //simulate placement of stone
       const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
       // todo: implement ko rule
-      const isGroupAfterMoveAlive =  this.hasGroupLiberties(group, testBoard);
+      const isGroupAfterMoveAlive = this.hasGroupLiberties(group, testBoard);
       const movePermitsACapture: boolean = this.movePermitsACapture(row, column, playerColor, testBoard)
 
       this.removeDeadStones(testBoard, playerColor);
@@ -175,9 +178,23 @@ export class GoBoardService {
     return undefined;
   }
 
-  public calculateFinalScores(board: (Stone|undefined)[][]): FinalScores{
+  public calculateFinalScores(board: (Stone | undefined)[][]): FinalScores {
 
-    
-    return new FinalScores(0,0);
+
+    return new FinalScores(0, 0);
+  }
+
+  public get boardDimension(): number {
+    return this._boardDimension;
+  }
+  public set boardDimension(value: number) {
+    this._boardDimension = value;
+  }
+
+  public get komi(): number {
+    return this._komi;
+  }
+  public set komi(value: number) {
+    this._komi = value;
   }
 }

@@ -29,7 +29,8 @@ export class GoGameComponent {
    gameEnded: boolean = false;
 
    constructor(private boardService: GoBoardService, private moveService: MoveService) {
-      this.moveLog = moveService.moveLog;
+      this.moveLog = this.moveService.moveLog;
+      this.boardDimension = this.boardService.boardDimension;
    }
 
    startGame(){

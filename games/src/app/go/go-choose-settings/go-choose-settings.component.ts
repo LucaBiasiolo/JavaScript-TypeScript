@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterModule } from '@angular/router';
+import { GoBoardService } from '../go-board.service';
 
 @Component({
   selector: 'app-go-choose-settings',
@@ -17,9 +18,11 @@ export class GoChooseSettingsComponent {
    komi: number = 6.5;
    boardDimension: number = 9;
    
-   constructor(private router: Router){}
+   constructor(private boardService: GoBoardService, private router: Router){}
 
    startGame(){
+    this.boardService.boardDimension = this.boardDimension;
+    this.boardService.komi = this.komi;
     const uuid: string = crypto.randomUUID();
     this.router.navigate(['/go/play', uuid]);
    }
