@@ -15,6 +15,7 @@ import { GoChooseSettingsComponent } from './go/go-choose-settings/go-choose-set
 import { GoLoadGameComponent } from './go/go-load-game/go-load-game.component';
 import { NineMensMorrisComponent } from './nine-mens-morris/nine-mens-morris.component';
 import { DominoComponent } from './domino/domino.component';
+import { GoMenuComponent } from './go/go-menu/go-menu.component';
 
 export const routes: Routes = [
     {path: 'rock-paper-scissors', component: RockPaperScissorsComponent},
@@ -24,9 +25,11 @@ export const routes: Routes = [
     {path: 'game-of-fifteen', component: GameOfFifteenComponent},
     {path: 'checkers', component: CheckersComponent},
     {path: 'chess', component: ChessComponent},
-    {path: 'go', component: GoGameComponent,},
-    {path: 'go/new', component: GoChooseSettingsComponent},
-    {path: 'go/load', component: GoLoadGameComponent},
+    {path: 'go', component: GoMenuComponent, children:[
+        {path: 'new', component: GoChooseSettingsComponent},
+        {path: 'load', component: GoLoadGameComponent},
+        {path: 'play/:id', component: GoGameComponent}
+    ]},
     {path: 'backgammon',component: BackgammonComponent},
     {path: '', component: HomeComponent},
     {path: 'freecell', component: FreeCellComponent},

@@ -1,1 +1,6 @@
-<p>go-load-game works!</p>
+<h3>Saved games found:</h3>
+<mat-list>
+    @for (game of games; track game) {
+        <mat-list-item>{{game.timestamp | date:'medium'}} <button mat-flat-button type="button" routerLink="./play/">Play</button></mat-list-item>
+    }
+</mat-list>

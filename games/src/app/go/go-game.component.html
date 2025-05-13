@@ -1,15 +1,6 @@
-<h2>Go</h2>
-@if(!gameStarted){
-<div><cite>The world is like a go game whose rules were uselessly complicated (Chinese proverb)</cite></div>
-<a mat-flat-button routerLink="./new">Start new game</a>
-<a mat-flat-button routerLink="./load">Load Game</a>
-}
 <div>
-    @if(gameStarted){
     <button mat-flat-button type="button" (click)="restartGame()">Restart game</button>
-    }
 </div>
-@if(gameStarted){
 <p>{{activePlayer.color}} player, it's your turn</p>
 @if(!gameEnded){
 <button mat-flat-button type="button" (click)="saveGame()">Save Game</button>
@@ -35,4 +26,3 @@
         }
     </section>
 </section>
-}
