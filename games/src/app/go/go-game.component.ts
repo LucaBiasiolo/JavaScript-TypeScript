@@ -62,7 +62,7 @@ export class GoGameComponent implements OnInit {
    restartGame() {
       this.gameEnded = false;
       this.moveService.moveLog = '';
-      this.moveLog = '';
+      this.moveLog = this.moveService.moveLog;
       this.blackPlayer.captures = 0;
       this.whitePlayer.captures = 0;
       this.activePlayer = this.blackPlayer;
@@ -73,10 +73,8 @@ export class GoGameComponent implements OnInit {
       let move: Move = new Move(undefined, undefined, this.activePlayer.color, true);
       let moveString: string = this.moveService.translateMoveIntoString(move, this.boardDimension);
       if (this.moveLog === '') {
-         this.moveLog += moveString;
          this.moveService.moveLog += moveString;
       } else {
-         this.moveLog += ',' + moveString;
          this.moveService.moveLog += ',' + moveString;
       }
       this.gameEnded = this.blackPlayer.hasPassed && this.whitePlayer.hasPassed;
@@ -84,6 +82,7 @@ export class GoGameComponent implements OnInit {
    }
 
    public switchTurn() {
+      this.moveLog = this.moveService.moveLog;
       if (!this.gameEnded && this.activePlayer.color === PieceColor.BLACK) {
          this.activePlayer = this.whitePlayer;
       } else {

@@ -52,7 +52,7 @@ export class GoBoardComponent implements OnInit {
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
         if (this.moveService.moveLog === '') {
-          this.moveService.moveLog = this.moveService.translateMoveIntoString(move, this.boardDimension)
+          this.moveService.moveLog += this.moveService.translateMoveIntoString(move, this.boardDimension)
         } else {
           this.moveService.moveLog += ',' + this.moveService.translateMoveIntoString(move, this.boardDimension);
         }
