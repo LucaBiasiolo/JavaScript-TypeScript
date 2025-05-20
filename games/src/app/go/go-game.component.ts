@@ -21,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
    styleUrl: './go-game.component.css'
 })
 export class GoGameComponent implements OnInit {
+
    blackPlayer: Player = new Player("Black Player", PieceColor.BLACK);
    whitePlayer: Player = new Player("White Player", PieceColor.WHITE);
    activePlayer: Player = this.blackPlayer;
@@ -53,8 +54,8 @@ export class GoGameComponent implements OnInit {
    saveGame() {
       let goGame: GoGame = new GoGame(this.boardDimension, this.komi, this.moveService.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
       this.gameService.saveGame(goGame).subscribe({
-         next: () => this.snackBar.open('Game saved successfully', '', {panelClass: 'success'}),
-         error: () => this.snackBar.open('Error during saving','',{panelClass:'error'})
+         next: () => this.snackBar.open('Game saved successfully', undefined, {panelClass: 'snackbar-success', duration: 5000}),
+         error: () => this.snackBar.open('Error during saving', undefined,{panelClass:'snackbar-error', duration:5000})
       })
    }
 

@@ -23,10 +23,13 @@ export class GoLoadGameComponent implements OnInit {
     this.goGameService.loadGames().subscribe((response) => this.games = response);
   }
 
-  deleteGame(gameId: number ) {
-    this.goGameService.deleteGame(gameId).subscribe( () =>{
-      this.snackBar.open('Game deleted successfully')
-      this.goGameService.loadGames().subscribe((response) => this.games = response);
+  deleteGame(gameId: number) {
+    this.goGameService.deleteGame(gameId).subscribe({
+      next: () => {
+        this.snackBar.open('Game deleted successfully', undefined, { panelClass: 'snackbar-success' , duration: 5000})
+        this.goGameService.loadGames().subscribe((response) => this.games = response);
+      },
+      error: () => this.snackBar.open('Error during delete',undefined, {panelClass: 'snackbar-error', duration: 5000})
     })
   }
 }
