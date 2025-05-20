@@ -18,11 +18,7 @@
         <p>White: {{whitePlayer.captures}}</p>
     </section>
     <section class="moveLog">
-        @if (moveLog.length > 0) {
         <p><b>Log of moves:</b></p>
-        @for (move of moveLog; track $index) {
-        <div>{{$index+1}}-{{move}}</div>
-        }
-        }
+        <div>{{moveLog}}</div>
     </section>
 </section>

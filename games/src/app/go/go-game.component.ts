@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { PieceColor } from '../PieceColor';
 import { Player } from './Player';
 import { GoBoardService } from './go-board.service';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Move } from './Move';
 import { MoveService } from './move.service';
 import { GoBoardComponent } from "./go-board/go-board.component";
@@ -12,36 +12,56 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { GoGameService } from './go-game.service';
 import { GoGame } from './GoGame';
-import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
    selector: 'app-go',
-   imports: [MatButtonModule, MatIconModule, RouterModule, GoBoardComponent,MatInputModule,MatFormFieldModule],
+   imports: [MatButtonModule, MatIconModule, RouterModule, GoBoardComponent, MatInputModule, MatFormFieldModule],
    templateUrl: './go-game.component.html',
    styleUrl: './go-game.component.css'
 })
-export class GoGameComponent {
+export class GoGameComponent implements OnInit {
    blackPlayer: Player = new Player("Black Player", PieceColor.BLACK);
    whitePlayer: Player = new Player("White Player", PieceColor.WHITE);
    activePlayer: Player = this.blackPlayer;
-   boardDimension: number = 9;   
-   moveLog: Move[] = [];
+   boardDimension: number = 9;
+   komi: number = 6.5;
+   moveLog: string = '';
    gameEnded: boolean = false;
+   gameId?: number;
 
-   constructor(private boardService: GoBoardService, private moveService: MoveService, private gameService: GoGameService, private httpClient: HttpClient) {
+   constructor(private boardService: GoBoardService, private moveService: MoveService, private gameService: GoGameService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
       this.moveLog = this.moveService.moveLog;
       this.boardDimension = this.boardService.boardDimension;
    }
 
-   saveGame(){
-      let goGame: GoGame = new GoGame(this.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
-      this.gameService.saveGame(goGame).subscribe()
+   ngOnInit(): void {
+      this.route.paramMap.subscribe(params => {
+         this.gameId = Number(params.get('id'));
+         this.gameService.loadGameById(this.gameId).subscribe(response => {
+            const loadedGame: GoGame = response;
+            // TODO: replay moves in the board
+            this.boardDimension = loadedGame.boardDimension;
+            this.blackPlayer.captures = loadedGame.blackCaptures;
+            this.whitePlayer.captures = loadedGame.whiteCaptures;
+            this.komi = loadedGame.komi;
+            this.moveLog = loadedGame.movesLog;
+         })
+      })
+   }
+
+   saveGame() {
+      let goGame: GoGame = new GoGame(this.boardDimension, this.komi, this.moveService.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
+      this.gameService.saveGame(goGame).subscribe({
+         next: () => this.snackBar.open('Game saved successfully', '', {panelClass: 'success'}),
+         error: () => this.snackBar.open('Error during saving','',{panelClass:'error'})
+      })
    }
 
    restartGame() {
       this.gameEnded = false;
-      this.moveService.moveLog = [];
-      this.moveLog = this.moveService.moveLog;
+      this.moveService.moveLog = '';
+      this.moveLog = '';
       this.blackPlayer.captures = 0;
       this.whitePlayer.captures = 0;
       this.activePlayer = this.blackPlayer;
@@ -50,7 +70,14 @@ export class GoGameComponent {
    public pass() {
       this.activePlayer.hasPassed = true;
       let move: Move = new Move(undefined, undefined, this.activePlayer.color, true);
-      this.moveService.moveLog.push(move);
+      let moveString: string = this.moveService.translateMoveIntoString(move, this.boardDimension);
+      if (this.moveLog === '') {
+         this.moveLog += moveString;
+         this.moveService.moveLog += moveString;
+      } else {
+         this.moveLog += ',' + moveString;
+         this.moveService.moveLog += ',' + moveString;
+      }
       this.gameEnded = this.blackPlayer.hasPassed && this.whitePlayer.hasPassed;
       this.switchTurn()
    }

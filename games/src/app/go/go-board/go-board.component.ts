@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Stone } from '../Stone';
 import { GoBoardService } from '../go-board.service';
 import { MoveService } from '../move.service';
@@ -23,7 +23,7 @@ export class GoBoardComponent implements OnInit {
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   columnLetters: string[] = [];
   board!: (Stone | undefined)[][];
-  boardPreviousState: (Stone|undefined)[][] = [];
+  boardPreviousState: (Stone | undefined)[][] = [];
   intersections: { x: number, y: number, color?: string }[] = [];
   svgDimension!: number;
 
@@ -51,7 +51,11 @@ export class GoBoardComponent implements OnInit {
         this.board[row][column] = new Stone(this.activePlayer.color);
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
-        this.moveService.moveLog.push(move);
+        if (this.moveService.moveLog === '') {
+          this.moveService.moveLog = this.moveService.translateMoveIntoString(move, this.boardDimension)
+        } else {
+          this.moveService.moveLog += ',' + this.moveService.translateMoveIntoString(move, this.boardDimension);
+        }
         this.activePlayer.hasPassed = false;
         let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
         if (stonesRemoved) {
