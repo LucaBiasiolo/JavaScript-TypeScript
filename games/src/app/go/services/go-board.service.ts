@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Stone } from './Stone';
-import { PieceColor } from '../PieceColor';
-import { MatrixCoordinates } from '../MatrixCoordinates';
-import { FinalScores } from './FinalScores';
+import { Stone } from '../beans/Stone';
+import { PieceColor } from '../../PieceColor';
+import { MatrixCoordinates } from '../../MatrixCoordinates';
+import { FinalScores } from '../beans/FinalScores';
+import { GoBoard } from '../beans/GoBoard';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class GoBoardService {
 
   columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
   private _boardDimension: number = 9;
-  private _komi: number = 6.5;
+  private _goBoard: GoBoard = new GoBoard(this.boardDimension, Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined)));
 
   constructor() { }
 
@@ -179,8 +180,7 @@ export class GoBoardService {
   }
 
   public calculateFinalScores(board: (Stone | undefined)[][]): FinalScores {
-
-
+    //TODO
     return new FinalScores(0, 0);
   }
 
@@ -190,11 +190,10 @@ export class GoBoardService {
   public set boardDimension(value: number) {
     this._boardDimension = value;
   }
-
-  public get komi(): number {
-    return this._komi;
+  public get goBoard(): GoBoard {
+    return this._goBoard;
   }
-  public set komi(value: number) {
-    this._komi = value;
+  public set goBoard(value: GoBoard) {
+    this._goBoard = value;
   }
 }

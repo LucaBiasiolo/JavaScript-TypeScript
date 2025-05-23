@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-import { GoGameService } from '../go-game.service';
-import { GoGame } from '../GoGame';
+import { GoGameService } from '../services/go-game.service';
+import { GoGame } from '../beans/GoGame';
 import { DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';

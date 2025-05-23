@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { PieceColor } from '../PieceColor';
+import { PieceColor } from '../../PieceColor';
 import { GoBoardService } from './go-board.service';
-import { Move } from './Move';
+import { Move } from '../beans/Move';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoveService {
 
-  private _moveLog: string = '';
+  private _moveLog: Move[] = [];
 
   constructor(private boardService: GoBoardService) { }
 
@@ -41,10 +41,10 @@ export class MoveService {
     return moves;
   }
 
-  public get moveLog(): string {
+  public get moveLog(): Move[] {
     return this._moveLog;
   }
-  public set moveLog(value: string) {
+  public set moveLog(value: Move[]) {
     this._moveLog = value;
   }
 }

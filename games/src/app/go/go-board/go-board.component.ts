@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Stone } from '../Stone';
-import { GoBoardService } from '../go-board.service';
-import { MoveService } from '../move.service';
-import { Move } from '../Move';
-import { Player } from '../Player';
+import { Stone } from '../beans/Stone';
+import { GoBoardService } from '../services/go-board.service';
+import { MoveService } from '../services/move.service';
+import { Move } from '../beans/Move';
+import { Player } from '../beans/Player';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PieceColor } from '../../PieceColor';
@@ -32,7 +32,7 @@ export class GoBoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.board = Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined));
+    this.board = this.boardService.goBoard.board;
     let boardPass: number = 50;
     for (let i = 1; i <= this.boardDimension; i++) {
       for (let j = 1; j <= this.boardDimension; j++) {
@@ -51,11 +51,7 @@ export class GoBoardComponent implements OnInit {
         this.board[row][column] = new Stone(this.activePlayer.color);
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
-        if (this.moveService.moveLog === '') {
-          this.moveService.moveLog += this.moveService.translateMoveIntoString(move, this.boardDimension)
-        } else {
-          this.moveService.moveLog += ',' + this.moveService.translateMoveIntoString(move, this.boardDimension);
-        }
+        this.moveService.moveLog.push(move)
         this.activePlayer.hasPassed = false;
         let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
         if (stonesRemoved) {

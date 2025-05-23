@@ -13,12 +13,15 @@
     <p>Game Ended</p>
     }
     <section class="score">
+        <p><b>Komi:</b> {{komi}}</p>
         <p><b>Captures:</b></p>
         <p>Black: {{blackPlayer.captures}}</p>
         <p>White: {{whitePlayer.captures}}</p>
     </section>
     <section class="moveLog">
         <p><b>Log of moves:</b></p>
-        <div>{{moveLog}}</div>
+        @for (move of moveLog; track $index) {
+            {{move.column}}{{move.row}}
+        }
     </section>
 </section>

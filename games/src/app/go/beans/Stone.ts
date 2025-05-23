@@ -1,4 +1,4 @@
-import { PieceColor } from "../PieceColor";
+import { PieceColor } from "../../PieceColor";
 
 export class Stone {
   private _color: PieceColor;
