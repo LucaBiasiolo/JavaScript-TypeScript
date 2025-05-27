@@ -40,10 +40,12 @@ export class GoGameComponent implements OnInit {
    ngOnInit(): void {
       this.route.paramMap.subscribe(params => {
          this.gameId = Number(params.get('id'));
+         // TODO: don't create uuid for new games, pick instead next id from database
+         // TODO: find active player that plays their move after loading the game
          this.gameService.loadGameById(this.gameId).subscribe(response => {
             const loadedGame: GoGame = response;
-            // TODO: replay moves on the board
             this.boardDimension = loadedGame.goBoard.boardDimension;
+            this.boardService.goBoard = loadedGame.goBoard;
             this.blackPlayer.captures = loadedGame.blackCaptures;
             this.whitePlayer.captures = loadedGame.whiteCaptures;
             this.komi = loadedGame.komi;
