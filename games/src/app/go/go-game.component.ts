@@ -25,7 +25,7 @@ export class GoGameComponent implements OnInit {
    blackPlayer: Player = new Player("Black Player", PieceColor.BLACK);
    whitePlayer: Player = new Player("White Player", PieceColor.WHITE);
    activePlayer: Player = this.blackPlayer;
-   boardDimension: number = 9;
+   boardDimension: number;
    moveLog: Move[] = [];
    gameEnded: boolean = false;
    gameId?: number;

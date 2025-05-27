@@ -13,6 +13,8 @@ export class GoBoardService {
   columnLetters: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']; //19 columns
   private _boardDimension: number = 9;
   private _goBoard: GoBoard = new GoBoard(this.boardDimension, Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined)));
+  private _board: (Stone | undefined)[][] = this._goBoard.board;
+  private _boardPreviousState: (Stone | undefined)[][] = this.board.map(row => [...row]); // shallow copy of board state
 
   constructor() { }
 
@@ -24,17 +26,16 @@ export class GoBoardService {
     return this.columnLetters[column];
   }
 
-  public isStonePlaceable(row: number, column: number, playerColor: PieceColor, board: (Stone | undefined)[][], boardPreviousState: (Stone | undefined)[][]): boolean {
-    if (!board[row][column]) {
-      const testBoard = board.map(row => [...row])
+  public isStonePlaceable(row: number, column: number, playerColor: PieceColor): boolean {
+    if (!this._board[row][column]) {
+      const testBoard = this.board.map(row => [...row])
       testBoard[row][column] = new Stone(playerColor); //simulate placement of stone
       const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
-      // todo: implement ko rule
       const isGroupAfterMoveAlive = this.hasGroupLiberties(group, testBoard);
       const movePermitsACapture: boolean = this.movePermitsACapture(row, column, playerColor, testBoard)
 
       this.removeDeadStones(testBoard, playerColor);
-      const moveViolatesKoRule: boolean = JSON.stringify(testBoard) === JSON.stringify(boardPreviousState);
+      const moveViolatesKoRule: boolean = JSON.stringify(testBoard) === JSON.stringify(this._boardPreviousState);
       return isGroupAfterMoveAlive || movePermitsACapture && !moveViolatesKoRule;
     }
     return false;
@@ -142,7 +143,6 @@ export class GoBoardService {
 
   /**
    * 
-   * @param board 
    * @param colorOfLastMove 
    * @returns Group of dead stones removed (for scoring) or undefined if no stone was removed
    */
@@ -195,5 +195,11 @@ export class GoBoardService {
   }
   public set goBoard(value: GoBoard) {
     this._goBoard = value;
+  }
+  public get board(): (Stone | undefined)[][] {
+    return this._board;
+  }
+  public set board(value: (Stone | undefined)[][]) {
+    this._board = value;
   }
 }

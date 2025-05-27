@@ -21,19 +21,15 @@ export class GoBoardComponent implements OnInit {
   @Input({ required: true, alias: 'white-player' }) whitePlayer!: Player;
   @Input({ required: true, alias: 'black-player' }) blackPlayer!: Player;
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
-  columnLetters: string[] = [];
   board!: (Stone | undefined)[][];
-  boardPreviousState: (Stone | undefined)[][] = [];
   intersections: { x: number, y: number, color?: string }[] = [];
   svgDimension!: number;
 
   constructor(private boardService: GoBoardService, private moveService: MoveService) {
-    this.columnLetters = this.boardService.getColumnLetters();
     this.board = this.boardService.goBoard.board;
   }
 
   ngOnInit() {
-    this.board = this.boardService.goBoard.board;
     let boardPass: number = 50;
     for (let i = 1; i <= this.boardDimension; i++) {
       for (let j = 1; j <= this.boardDimension; j++) {
@@ -47,16 +43,13 @@ export class GoBoardComponent implements OnInit {
     let row: number = intersection.y / 50 - 1
     let column: number = intersection.x / 50 - 1;
     if (!this.gameEnded) {
-      if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board, this.boardPreviousState)) {
-        this.boardPreviousState = this.board.map(row => [...row]); // creates shallow copy of board state before placing stone
-        // TODO: fix following two lines centralizing board
-        this.board[row][column] = new Stone(this.activePlayer.color);
-        this.boardService.goBoard.board[row][column] = new Stone(this.activePlayer.color);
+      if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color)) {
+        this.boardService.board[row][column] = new Stone(this.activePlayer.color);
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
         this.moveService.moveLog.push(move)
         this.activePlayer.hasPassed = false;
-        let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
+        let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.boardService.board, this.activePlayer.color);
         if (stonesRemoved) {
           this.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
         }
