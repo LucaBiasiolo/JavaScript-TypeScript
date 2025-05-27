@@ -10,7 +10,8 @@ export class GoGame {
     public whiteCaptures: number;
     public createdAt: Date;
 
-    constructor(komi: number, goBoard: GoBoard, moves: Move[], blackCaptures: number, whiteCaptures: number, createdAt: Date) {
+    constructor(id: number | undefined, komi: number, goBoard: GoBoard, moves: Move[], blackCaptures: number, whiteCaptures: number, createdAt: Date) {
+        this.id = id;
         this.goBoard = goBoard;
         this.moves = moves;
         this.komi = komi;

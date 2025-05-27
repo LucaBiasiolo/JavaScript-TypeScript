@@ -50,12 +50,14 @@ export class GoGameComponent implements OnInit {
             this.whitePlayer.captures = loadedGame.whiteCaptures;
             this.komi = loadedGame.komi;
             this.moveLog = loadedGame.moves;
+            this.moveService.moveLog = this.moveLog;
+            this.activePlayer = this.moveLog.length % 2 == 0 ? this.blackPlayer : this.whitePlayer;
          })
       })
    }
 
    saveGame() {
-      let goGame: GoGame = new GoGame(this.komi, this.boardService.goBoard,this.moveService.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
+      let goGame: GoGame = new GoGame(this.gameId,this.komi, this.boardService.goBoard,this.moveService.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
       this.gameService.saveGame(goGame).subscribe({
          next: () => this.snackBar.open('Game saved successfully', undefined, { panelClass: 'snackbar-success', duration: 3000 }),
          error: () => this.snackBar.open('Error during saving', undefined, { panelClass: 'snackbar-error', duration: 3000 })

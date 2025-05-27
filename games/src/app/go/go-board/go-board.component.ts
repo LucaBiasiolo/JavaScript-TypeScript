@@ -29,6 +29,7 @@ export class GoBoardComponent implements OnInit {
 
   constructor(private boardService: GoBoardService, private moveService: MoveService) {
     this.columnLetters = this.boardService.getColumnLetters();
+    this.board = this.boardService.goBoard.board;
   }
 
   ngOnInit() {
@@ -48,7 +49,9 @@ export class GoBoardComponent implements OnInit {
     if (!this.gameEnded) {
       if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color, this.board, this.boardPreviousState)) {
         this.boardPreviousState = this.board.map(row => [...row]); // creates shallow copy of board state before placing stone
+        // TODO: fix following two lines centralizing board
         this.board[row][column] = new Stone(this.activePlayer.color);
+        this.boardService.goBoard.board[row][column] = new Stone(this.activePlayer.color);
         intersection.color = this.activePlayer.color;
         let move: Move = new Move(row, column, this.activePlayer.color, false);
         this.moveService.moveLog.push(move)
