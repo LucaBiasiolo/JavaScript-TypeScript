@@ -23,7 +23,7 @@ export class GoChooseSettingsComponent {
 
    startGame(){
     this.boardService.boardDimension = this.boardDimension;
-    this.komi = this.goGameService.komi;
+    this.goGameService.komi = this.komi;
     const uuid: string = crypto.randomUUID();
     this.router.navigate(['/go/play', uuid]);
    }

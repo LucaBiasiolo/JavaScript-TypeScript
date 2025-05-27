@@ -1,7 +1,7 @@
 <h3>Saved games found:</h3>
 <mat-list>
     @for (game of games; track game) {
-    <mat-list-item>{{game.createdTimestamp | date:'medium'}} <button mat-flat-button type="button"
+    <mat-list-item>Created at: {{game.createdAt | date:'medium'}} <button mat-flat-button type="button"
             routerLink="/go/play/{{game.id}}">Play</button> <button mat-flat-button type="button"
             (click)="deleteGame(game.id!)">Delete</button></mat-list-item>
     }

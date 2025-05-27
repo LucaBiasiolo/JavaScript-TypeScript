@@ -1,17 +1,10 @@
 import { PieceColor } from "../../PieceColor";
 
 export class Stone {
-  private _color: PieceColor;
+  public color: PieceColor;
 
   constructor(color: PieceColor) {
-    this._color = color;
-  }
-
-  public get color(): PieceColor {
-    return this._color;
-  }
-  public set color(value: PieceColor) {
-    this._color = value;
+    this.color = color;
   }
 
   public toString(): string {
