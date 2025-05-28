@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Stone } from '../beans/Stone';
 import { GoBoardService } from '../services/go-board.service';
 import { MoveService } from '../services/move.service';
@@ -7,6 +7,7 @@ import { Player } from '../beans/Player';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PieceColor } from '../../PieceColor';
+import { GoGameService } from '../services/go-game.service';
 
 @Component({
   selector: 'app-go-board',
@@ -15,17 +16,22 @@ import { PieceColor } from '../../PieceColor';
   styleUrl: './go-board.component.css'
 })
 export class GoBoardComponent implements OnInit {
-  @Input({ required: true, alias: 'board-dimension' }) boardDimension!: number;
-  @Input({ required: true, alias: 'game-ended' }) gameEnded: boolean = false;
-  @Input({ required: true, alias: 'active-player' }) activePlayer!: Player;
-  @Input({ required: true, alias: 'white-player' }) whitePlayer!: Player;
-  @Input({ required: true, alias: 'black-player' }) blackPlayer!: Player;
+  boardDimension!: number;
+  gameEnded: boolean;
+  activePlayer: Player;
+  whitePlayer: Player;
+  blackPlayer: Player;
   @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   board!: (Stone | undefined)[][];
   intersections: { x: number, y: number, color?: string }[] = [];
   svgDimension!: number;
 
-  constructor(private boardService: GoBoardService, private moveService: MoveService) {
+  constructor(private boardService: GoBoardService, private gameService: GoGameService, private moveService: MoveService) {
+    this.boardDimension = this.boardService.goBoard.boardDimension;
+    this.gameEnded = this.gameService.gameEnded;
+    this.activePlayer = this.gameService.activePlayer;
+    this.whitePlayer = this.gameService.whitePlayer;
+    this.blackPlayer = this.gameService.blackPlayer;
     this.board = this.boardService.goBoard.board;
   }
 

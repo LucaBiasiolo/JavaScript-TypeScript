@@ -35,6 +35,7 @@ export class GoBoardService {
       const movePermitsACapture: boolean = this.movePermitsACapture(row, column, playerColor, testBoard)
 
       this.removeDeadStones(testBoard, playerColor);
+      //FIXME: ko rule is violated
       const moveViolatesKoRule: boolean = JSON.stringify(testBoard) === JSON.stringify(this._boardPreviousState);
       return isGroupAfterMoveAlive || movePermitsACapture && !moveViolatesKoRule;
     }
