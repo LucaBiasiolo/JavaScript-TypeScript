@@ -23,21 +23,21 @@ export class GoGameComponent implements OnInit {
 
    blackPlayer: Player;
    whitePlayer: Player;
-   activePlayer: Player;
+   activePlayer!: Player;
    boardDimension: number;
    moveLog: Move[];
-   gameEnded: boolean;
+   gameEnded!: boolean;
    gameId?: number;
    komi: number;
 
    constructor(private boardService: GoBoardService, private moveService: MoveService, private gameService: GoGameService, private route: ActivatedRoute, private snackBar: MatSnackBar) {
       this.blackPlayer = this.gameService.blackPlayer;
       this.whitePlayer = this.gameService.whitePlayer;
-      this.activePlayer = this.gameService.activePlayer;
+      this.gameService.activePlayer.subscribe(activePlayer => this.activePlayer = activePlayer);
       this.moveLog = this.moveService.moveLog;
       this.boardDimension = this.boardService.boardDimension;
       this.komi = this.gameService.komi;
-      this.gameEnded = this.gameService.gameEnded;
+      this.gameService.gameEnded.subscribe(gameEnded => this.gameEnded = gameEnded);
    }
 
    ngOnInit(): void {
@@ -71,15 +71,8 @@ export class GoGameComponent implements OnInit {
    }
 
    public pass() {
-      this.activePlayer.hasPassed = true;
-      let move: Move = new Move(undefined, undefined, this.activePlayer.color, true);
-      this.moveService.moveLog.push(move)
-      this.gameEnded = this.blackPlayer.hasPassed && this.whitePlayer.hasPassed;
-      this.switchTurn()
-   }
-
-   public switchTurn() {
-      this.gameService.switchTurn();
+      this.gameService.pass();
+      
    }
 }
 

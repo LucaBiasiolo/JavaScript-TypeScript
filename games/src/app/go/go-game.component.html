@@ -7,7 +7,7 @@
 <button mat-flat-button type="button" (click)="pass()">Pass</button>
 }
 <section class="go-board-moveLog-container">
-    <app-go-board (placedStoneEvent)="switchTurn()"></app-go-board>
+    <app-go-board></app-go-board>
     @if (gameEnded) {
     <p>Game Ended</p>
     }

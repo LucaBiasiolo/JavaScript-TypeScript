@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GoGame } from '../beans/GoGame';
 import { MoveService } from './move.service';
 import { PieceColor } from '../../PieceColor';
 import { Player } from '../beans/Player';
+import { Move } from '../beans/Move';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,10 @@ import { Player } from '../beans/Player';
 export class GoGameService {
 
   komi: number = 6.5;
-  gameEnded: boolean = false;
-    blackPlayer: Player = new Player("Black Player", PieceColor.BLACK);
+  blackPlayer: Player = new Player("Black Player", PieceColor.BLACK);
   whitePlayer: Player = new Player("White Player", PieceColor.WHITE);
-  activePlayer: Player = this.blackPlayer;
+  activePlayer: BehaviorSubject<Player> = new BehaviorSubject<Player>(this.blackPlayer);
+  gameEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.blackPlayer.hasPassed && this.whitePlayer.hasPassed);
 
   constructor(private http: HttpClient, private moveService: MoveService) { }
 
@@ -35,19 +36,35 @@ export class GoGameService {
     return this.http.delete<number>('http://localhost:8080/games-backend/go/' + id)
   }
 
-  restartGame(){
-    this.gameEnded = false;
+  restartGame() {
+    this.gameEnded.next(false);
     this.moveService.moveLog = [];
     this.blackPlayer.captures = 0;
     this.whitePlayer.captures = 0;
-    this.activePlayer = this.blackPlayer;
+    this.activePlayer.next(this.blackPlayer);
   }
 
-  switchTurn(){
-    if (!this.gameEnded && this.activePlayer.color === PieceColor.BLACK) {
-         this.activePlayer = this.whitePlayer;
-      } else {
-         this.activePlayer = this.blackPlayer;
+  switchTurn() {
+    if (!this.gameEnded.getValue() && this.activePlayer.getValue().color === PieceColor.BLACK) {
+      this.activePlayer.next(this.whitePlayer);
+    } else {
+      this.activePlayer.next(this.blackPlayer);
     }
+  }
+
+  updateCaptures(stoneColor: PieceColor, howMany: number) {
+    if (stoneColor === PieceColor.WHITE) {
+      this.blackPlayer.captures = this.blackPlayer.captures + howMany;
+    } else {
+      this.whitePlayer.captures = this.whitePlayer.captures + howMany;
+    }
+  }
+
+  pass() {
+    this.activePlayer.getValue().hasPassed = true;
+    let move: Move = new Move(undefined, undefined, this.activePlayer.getValue().color, true);
+    this.gameEnded.next(this.blackPlayer.hasPassed && this.whitePlayer.hasPassed);
+    this.moveService.moveLog.push(move)
+    this.switchTurn()
   }
 }

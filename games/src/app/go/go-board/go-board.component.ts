@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Stone } from '../beans/Stone';
 import { GoBoardService } from '../services/go-board.service';
 import { MoveService } from '../services/move.service';
@@ -6,7 +6,6 @@ import { Move } from '../beans/Move';
 import { Player } from '../beans/Player';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { PieceColor } from '../../PieceColor';
 import { GoGameService } from '../services/go-game.service';
 
 @Component({
@@ -17,21 +16,16 @@ import { GoGameService } from '../services/go-game.service';
 })
 export class GoBoardComponent implements OnInit {
   boardDimension!: number;
-  gameEnded: boolean;
-  activePlayer: Player;
-  whitePlayer: Player;
-  blackPlayer: Player;
-  @Output() placedStoneEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  gameEnded!: boolean;
+  activePlayer!: Player;
   board!: (Stone | undefined)[][];
   intersections: { x: number, y: number, color?: string }[] = [];
   svgDimension!: number;
 
   constructor(private boardService: GoBoardService, private gameService: GoGameService, private moveService: MoveService) {
     this.boardDimension = this.boardService.goBoard.boardDimension;
-    this.gameEnded = this.gameService.gameEnded;
-    this.activePlayer = this.gameService.activePlayer;
-    this.whitePlayer = this.gameService.whitePlayer;
-    this.blackPlayer = this.gameService.blackPlayer;
+    this.gameService.gameEnded.subscribe(gameEnded => this.gameEnded = gameEnded);
+    this.gameService.activePlayer.subscribe( activePlayer => this.activePlayer = activePlayer);
     this.board = this.boardService.goBoard.board;
   }
 
@@ -45,6 +39,7 @@ export class GoBoardComponent implements OnInit {
     this.svgDimension = 50 * (this.boardDimension + 1);
   }
 
+  // TODO: move logic to service
   public placeStone(intersection: { x: number, y: number, color?: string }) {
     let row: number = intersection.y / 50 - 1
     let column: number = intersection.x / 50 - 1;
@@ -57,18 +52,10 @@ export class GoBoardComponent implements OnInit {
         this.activePlayer.hasPassed = false;
         let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.boardService.board, this.activePlayer.color);
         if (stonesRemoved) {
-          this.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
+          this.gameService.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
         }
-        this.placedStoneEvent.emit(true);
+        this.gameService.switchTurn();
       }
-    }
-  }
-
-  private updateCaptures(stoneColor: PieceColor, howMany: number) {
-    if (stoneColor === PieceColor.WHITE) {
-      this.blackPlayer.captures = this.blackPlayer.captures + howMany;
-    } else {
-      this.whitePlayer.captures = this.whitePlayer.captures + howMany;
     }
   }
 }
