@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" wiewBox="0 0 500 500">
+  <!-- Background -->
+  <rect width="500" height="500" fill="white"/>
+
+  <g stroke="black" stroke-width="1">
+    <!-- Row 1 -->
+    <rect x="50" y="50" width="50" height="50" fill="#D2B48C"/>
+    <rect x="100" y="50" width="50" height="50" fill="#8B4513"/>
+    <rect x="150" y="50" width="50" height="50" fill="#D2B48C"/>
+    <rect x="200" y="50" width="50" height="50" fill="#8B4513"/>
+    <rect x="250" y="50" width="50" height="50" fill="#D2B48C"/>
+    <rect x="300" y="50" width="50" height="50" fill="#8B4513"/>
+    <rect x="350" y="50" width="50" height="50" fill="#D2B48C"/>
+    <rect x="400" y="50" width="50" height="50" fill="#8B4513"/>
+
+    <!-- Row 2 -->
+    <rect x="50" y="100" width="50" height="50" fill="#8B4513"/>
+    <rect x="100" y="100" width="50" height="50" fill="#D2B48C"/>
+    <rect x="150" y="100" width="50" height="50" fill="#8B4513"/>
+    <rect x="200" y="100" width="50" height="50" fill="#D2B48C"/>
+    <rect x="250" y="100" width="50" height="50" fill="#8B4513"/>
+    <rect x="300" y="100" width="50" height="50" fill="#D2B48C"/>
+    <rect x="350" y="100" width="50" height="50" fill="#8B4513"/>
+    <rect x="400" y="100" width="50" height="50" fill="#D2B48C"/>
+
+    <!-- Row 3 -->
+    <rect x="50" y="150" width="50" height="50" fill="#D2B48C"/>
+    <rect x="100" y="150" width="50" height="50" fill="#8B4513"/>
+    <rect x="150" y="150" width="50" height="50" fill="#D2B48C"/>
+    <rect x="200" y="150" width="50" height="50" fill="#8B4513"/>
+    <rect x="250" y="150" width="50" height="50" fill="#D2B48C"/>
+    <rect x="300" y="150" width="50" height="50" fill="#8B4513"/>
+    <rect x="350" y="150" width="50" height="50" fill="#D2B48C"/>
+    <rect x="400" y="150" width="50" height="50" fill="#8B4513"/>
+
+    <!-- Row 4 -->
+    <rect x="50" y="200" width="50" height="50" fill="#8B4513"/>
+    <rect x="100" y="200" width="50" height="50" fill="#D2B48C"/>
+    <rect x="150" y="200" width="50" height="50" fill="#8B4513"/>
+    <rect x="200" y="200" width="50" height="50" fill="#D2B48C"/>
+    <rect x="250" y="200" width="50" height="50" fill="#8B4513"/>
+    <rect x="300" y="200" width="50" height="50" fill="#D2B48C"/>
+    <rect x="350" y="200" width="50" height="50" fill="#8B4513"/>
+    <rect x="400" y="200" width="50" height="50" fill="#D2B48C"/>
+
+    <!-- Row 5 -->
+    <rect x="50" y="250" width="50" height="50" fill="#D2B48C"/>
+    <rect x="100" y="250" width="50" height="50" fill="#8B4513"/>
+    <rect x="150" y="250" width="50" height="50" fill="#D2B48C"/>
+    <rect x="200" y="250" width="50" height="50" fill="#8B4513"/>
+    <rect x="250" y="250" width="50" height="50" fill="#D2B48C"/>
+    <rect x="300" y="250" width="50" height="50" fill="#8B4513"/>
+    <rect x="350" y="250" width="50" height="50" fill="#D2B48C"/>
+    <rect x="400" y="250" width="50" height="50" fill="#8B4513"/>
+
+    <!-- Row 6 -->
+    <rect x="50" y="300" width="50" height="50" fill="#8B4513"/>
+    <rect x="100" y="300" width="50" height="50" fill="#D2B48C"/>
+    <rect x="150" y="300" width="50" height="50" fill="#8B4513"/>
+    <rect x="200" y="300" width="50" height="50" fill="#D2B48C"/>
+    <rect x="250" y="300" width="50" height="50" fill="#8B4513"/>
+    <rect x="300" y="300" width="50" height="50" fill="#D2B48C"/>
+    <rect x="350" y="300" width="50" height="50" fill="#8B4513"/>
+    <rect x="400" y="300" width="50" height="50" fill="#D2B48C"/>
+
+    <!-- Row 7 -->
+    <rect x="50" y="350" width="50" height="50" fill="#D2B48C"/>
+    <rect x="100" y="350" width="50" height="50" fill="#8B4513"/>
+    <rect x="150" y="350" width="50" height="50" fill="#D2B48C"/>
+    <rect x="200" y="350" width="50" height="50" fill="#8B4513"/>
+    <rect x="250" y="350" width="50" height="50" fill="#D2B48C"/>
+    <rect x="300" y="350" width="50" height="50" fill="#8B4513"/>
+    <rect x="350" y="350" width="50" height="50" fill="#D2B48C"/>
+    <rect x="400" y="350" width="50" height="50" fill="#8B4513"/>
+
+    <!-- Row 8 -->
+    <rect x="50" y="400" width="50" height="50" fill="#8B4513"/>
+    <rect x="100" y="400" width="50" height="50" fill="#D2B48C"/>
+    <rect x="150" y="400" width="50" height="50" fill="#8B4513"/>
+    <rect x="200" y="400" width="50" height="50" fill="#D2B48C"/>
+    <rect x="250" y="400" width="50" height="50" fill="#8B4513"/>
+    <rect x="300" y="400" width="50" height="50" fill="#D2B48C"/>
+    <rect x="350" y="400" width="50" height="50" fill="#8B4513"/>
+    <rect x="400" y="400" width="50" height="50" fill="#D2B48C"/>
+  </g>
+
+    <!-- Column coordinates (A to J) -->
+  <g font-family="Arial" font-size="14" fill="black" text-anchor="middle">
+    <text x="75" y="35">a</text>
+    <text x="125" y="35">b</text>
+    <text x="175" y="35">c</text>
+    <text x="225" y="35">d</text>
+    <text x="275" y="35">e</text>
+    <text x="325" y="35">f</text>
+    <text x="375" y="35">g</text>
+    <text x="425" y="35">h</text>
+  </g>
+
+  <!-- Column coordinates (A to J) -->
+  <g font-family="Arial" font-size="14" fill="black" text-anchor="middle">
+    <text x="75" y="475">a</text>
+    <text x="125" y="475">b</text>
+    <text x="175" y="475">c</text>
+    <text x="225" y="475">d</text>
+    <text x="275" y="475">e</text>
+    <text x="325" y="475">f</text>
+    <text x="375" y="475">g</text>
+    <text x="425" y="475">h</text>
+  </g>
+
+  <!-- Row coordinates (8 to 1) -->
+  <g font-family="Arial" font-size="14" fill="black" text-anchor="middle">
+    <text x="25" y="75">8</text>
+    <text x="25" y="125">7</text>
+    <text x="25" y="175">6</text>
+    <text x="25" y="225">5</text>
+    <text x="25" y="275">4</text>
+    <text x="25" y="325">3</text>
+    <text x="25" y="375">2</text>
+    <text x="25" y="425">1</text>
+  </g>
+
+    <!-- Row coordinates (8 to 1) -->
+  <g font-family="Arial" font-size="14" fill="black" text-anchor="middle">
+    <text x="475" y="75">8</text>
+    <text x="475" y="125">7</text>
+    <text x="475" y="175">6</text>
+    <text x="475" y="225">5</text>
+    <text x="475" y="275">4</text>
+    <text x="475" y="325">3</text>
+    <text x="475" y="375">2</text>
+    <text x="475" y="425">1</text>
+  </g>
+
+</svg>
