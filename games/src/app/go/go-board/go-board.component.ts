@@ -25,7 +25,7 @@ export class GoBoardComponent implements OnInit {
   constructor(private boardService: GoBoardService, private gameService: GoGameService, private moveService: MoveService) {
     this.boardDimension = this.boardService.goBoard.boardDimension;
     this.gameService.gameEnded.subscribe(gameEnded => this.gameEnded = gameEnded);
-    this.gameService.activePlayer.subscribe( activePlayer => this.activePlayer = activePlayer);
+    this.gameService.activePlayer.subscribe(activePlayer => this.activePlayer = activePlayer);
     this.board = this.boardService.goBoard.board;
   }
 
@@ -43,19 +43,17 @@ export class GoBoardComponent implements OnInit {
   public placeStone(intersection: { x: number, y: number, color?: string }) {
     let row: number = intersection.y / 50 - 1
     let column: number = intersection.x / 50 - 1;
-    if (!this.gameEnded) {
-      if (this.boardService.isStonePlaceable(row, column, this.activePlayer.color)) {
-        this.boardService.board[row][column] = new Stone(this.activePlayer.color);
-        intersection.color = this.activePlayer.color;
-        let move: Move = new Move(row, column, this.activePlayer.color, false);
-        this.moveService.moveLog.push(move)
-        this.activePlayer.hasPassed = false;
-        let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.boardService.board, this.activePlayer.color);
-        if (stonesRemoved) {
-          this.gameService.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
-        }
-        this.gameService.switchTurn();
+    let placed: boolean = this.boardService.placeStone(row, column, this.activePlayer.color);
+    if (placed) {
+      intersection.color = this.activePlayer.color;
+      let move: Move = new Move(row, column, this.activePlayer.color, false);
+      this.moveService.moveLog.push(move)
+      this.activePlayer.hasPassed = false;
+      let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
+      if (stonesRemoved) {
+        this.gameService.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
       }
+      this.gameService.switchTurn();
     }
   }
 }

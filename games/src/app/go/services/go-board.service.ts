@@ -15,8 +15,9 @@ export class GoBoardService {
   private _goBoard: GoBoard = new GoBoard(this.boardDimension, Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined)));
   private _board: (Stone | undefined)[][] = this._goBoard.board;
   private _boardPreviousState: (Stone | undefined)[][] = this.board.map(row => [...row]); // shallow copy of board state
+  private _gameEnded!: boolean;
 
-  constructor() { }
+  constructor() {}
 
   public getColumnLetters(): string[] {
     return this.columnLetters;
@@ -27,17 +28,25 @@ export class GoBoardService {
   }
 
   public isStonePlaceable(row: number, column: number, playerColor: PieceColor): boolean {
-    if (!this._board[row][column]) {
-      const testBoard = this.board.map(row => [...row])
+    if (!this._board[row][column] && !this._gameEnded) {
+      const testBoard = this._board.map(row => [...row])
       testBoard[row][column] = new Stone(playerColor); //simulate placement of stone
       const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
       const isGroupAfterMoveAlive = this.hasGroupLiberties(group, testBoard);
       const movePermitsACapture: boolean = this.movePermitsACapture(row, column, playerColor, testBoard)
 
       this.removeDeadStones(testBoard, playerColor);
-      //FIXME: ko rule is violated
       const moveViolatesKoRule: boolean = JSON.stringify(testBoard) === JSON.stringify(this._boardPreviousState);
       return isGroupAfterMoveAlive || movePermitsACapture && !moveViolatesKoRule;
+    }
+    return false;
+  }
+
+  public placeStone(row: number, column: number, playerColor: PieceColor): boolean {
+    if (this.isStonePlaceable(row, column, playerColor)) {
+      this._boardPreviousState = this._board.map(row => [...row]);
+      this._board[row][column] = new Stone(playerColor);
+      return true;
     }
     return false;
   }
