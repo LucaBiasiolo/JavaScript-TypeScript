@@ -38,7 +38,6 @@ export class GoBoardComponent implements OnInit {
     this.svgDimension = 50 * (this.boardDimension + 1);
   }
 
-  // TODO: move logic to service
   public placeStone(intersection: { x: number, y: number, color?: string }) {
     let row: number = intersection.y / 50 - 1
     let column: number = intersection.x / 50 - 1;

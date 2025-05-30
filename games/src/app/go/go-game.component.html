@@ -19,8 +19,6 @@
     </section>
     <section class="moveLog">
         <p><b>Log of moves:</b></p>
-        @for (move of moveLog; track $index) {
-            {{move.row}}{{move.column}}
-        }
+        {{moveLogString}}
     </section>
 </section>

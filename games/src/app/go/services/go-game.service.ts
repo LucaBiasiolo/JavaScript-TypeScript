@@ -40,7 +40,7 @@ export class GoGameService {
 
   restartGame() {
     this.gameEnded.next(false);
-    this.moveService.moveLog = [];
+    this.moveService.resetMoveLog();
     this.blackPlayer.captures = 0;
     this.whitePlayer.captures = 0;
     this.activePlayer.next(this.blackPlayer);
@@ -68,13 +68,13 @@ export class GoGameService {
     this.activePlayer.getValue().hasPassed = true;
     let move: Move = new Move(undefined, undefined, this.activePlayer.getValue().color, true);
     this.gameEnded.next(this.blackPlayer.hasPassed && this.whitePlayer.hasPassed);
-    this.moveService.moveLog.push(move)
+    this.moveService.addMoveToLog(move)
     this.switchTurn()
   }
 
   public afterStonePlaced(row: number, column: number) {
     let move: Move = new Move(row, column, this.activePlayer.getValue().color, false);
-    this.moveService.moveLog.push(move);
+    this.moveService.addMoveToLog(move);
     this.activePlayer.getValue().hasPassed = false;
     let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(undefined, this.activePlayer.getValue().color);
     if (stonesRemoved) {

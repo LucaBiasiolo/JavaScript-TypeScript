@@ -25,7 +25,8 @@ export class GoGameComponent implements OnInit {
    whitePlayer: Player;
    activePlayer!: Player;
    boardDimension: number;
-   moveLog: Move[];
+   moveLog!: Move[];
+   moveLogString!: string;
    gameEnded!: boolean;
    gameId?: number;
    komi: number;
@@ -34,13 +35,18 @@ export class GoGameComponent implements OnInit {
       this.blackPlayer = this.gameService.blackPlayer;
       this.whitePlayer = this.gameService.whitePlayer;
       this.gameService.activePlayer.subscribe(activePlayer => this.activePlayer = activePlayer);
-      this.moveLog = this.moveService.moveLog;
+      this.moveService.moveLog.subscribe( moveLog => {
+         this.moveLog = moveLog
+         this.moveLogString = this.moveService.translateMoveLogIntoString(moveLog)
+      }
+      );
       this.boardDimension = this.boardService.boardDimension;
       this.komi = this.gameService.komi;
       this.gameService.gameEnded.subscribe(gameEnded => this.gameEnded = gameEnded);
    }
 
    ngOnInit(): void {
+      //TODO: move logic to services
       this.route.paramMap.subscribe(params => {
          this.gameId = Number(params.get('id'));
          // TODO: don't create uuid for new games, pick instead next id from database
@@ -59,7 +65,7 @@ export class GoGameComponent implements OnInit {
    }
 
    saveGame() {
-      let goGame: GoGame = new GoGame(this.gameId,this.komi, this.boardService.goBoard,this.moveService.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
+      let goGame: GoGame = new GoGame(this.gameId,this.komi, this.boardService.goBoard,this.moveLog, this.blackPlayer.captures, this.whitePlayer.captures, new Date());
       this.gameService.saveGame(goGame).subscribe({
          next: () => this.snackBar.open('Game saved successfully', undefined, { panelClass: 'snackbar-success', duration: 3000 }),
          error: () => this.snackBar.open('Error during saving', undefined, { panelClass: 'snackbar-error', duration: 3000 })

@@ -2,25 +2,47 @@ import { Injectable } from '@angular/core';
 import { PieceColor } from '../../PieceColor';
 import { GoBoardService } from './go-board.service';
 import { Move } from '../beans/Move';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoveService {
 
-  private _moveLog: Move[] = [];
+  private _moveLog: BehaviorSubject<Move[]> = new BehaviorSubject<Move[]>([]);
+
+  public get moveLog(): Observable<Move[]> {
+    return this._moveLog;
+  }
+
+  public addMoveToLog(move: Move){
+    const currentLog: Move[] = this._moveLog.getValue();
+    this._moveLog.next([...currentLog, move])
+  }
+
+  public resetMoveLog(){
+    this._moveLog.next([])
+  }
+
+  public set moveLog(moveLog: Move[]){
+    this._moveLog.next(moveLog)
+  }
 
   constructor(private boardService: GoBoardService) { }
 
-  public translateMoveIntoString(move: Move, boardDimension: number): string {
-    if (move.isPass) {
-      return 'pass';
-    } else {
-      let stringRow: string = `${boardDimension - move.row!}`;
-      let stringColumn: string = this.boardService.getColumnLetter(move.column!);
+  public translateMoveLogIntoString(moveLog: Move[]): string {
+    let moveLogString: string = '';
+    for (let move of moveLog) {
+      if (move.isPass) {
+        moveLogString += 'pass,';
+      } else {
+        let stringRow: string = `${this.boardService.boardDimension - move.row!}`;
+        let stringColumn: string = this.boardService.getColumnLetter(move.column!);
 
-      return stringColumn + stringRow;
+        moveLogString +=stringColumn + stringRow + ",";
+      }
     }
+    return moveLogString;
   }
 
   public parseMovesFromMovesLog(movesLog: string): Move[] {
@@ -35,16 +57,9 @@ export class MoveService {
         let moveColumn = Number(moveInString[0]);
         let moveRow = this.boardService.columnLetters.indexOf(moveInString[1]);
 
-        moves.push(new Move(moveRow, moveColumn,color, false));
+        moves.push(new Move(moveRow, moveColumn, color, false));
       }
     }
     return moves;
-  }
-
-  public get moveLog(): Move[] {
-    return this._moveLog;
-  }
-  public set moveLog(value: Move[]) {
-    this._moveLog = value;
   }
 }
