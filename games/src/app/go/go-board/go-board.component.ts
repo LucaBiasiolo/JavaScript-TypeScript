@@ -2,7 +2,6 @@ import { Component, OnInit, Output } from '@angular/core';
 import { Stone } from '../beans/Stone';
 import { GoBoardService } from '../services/go-board.service';
 import { MoveService } from '../services/move.service';
-import { Move } from '../beans/Move';
 import { Player } from '../beans/Player';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,17 +42,12 @@ export class GoBoardComponent implements OnInit {
   public placeStone(intersection: { x: number, y: number, color?: string }) {
     let row: number = intersection.y / 50 - 1
     let column: number = intersection.x / 50 - 1;
-    let placed: boolean = this.boardService.placeStone(row, column, this.activePlayer.color);
-    if (placed) {
-      intersection.color = this.activePlayer.color;
-      let move: Move = new Move(row, column, this.activePlayer.color, false);
-      this.moveService.moveLog.push(move)
-      this.activePlayer.hasPassed = false;
-      let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(this.board, this.activePlayer.color);
-      if (stonesRemoved) {
-        this.gameService.updateCaptures(stonesRemoved[0].color, stonesRemoved.length)
+    if (!this.gameEnded) {
+      let placed: boolean = this.boardService.placeStone(row, column, this.activePlayer.color);
+      if (placed) {
+        intersection.color = this.activePlayer.color;
+        this.gameService.afterStonePlaced(row, column);
       }
-      this.gameService.switchTurn();
     }
   }
 }

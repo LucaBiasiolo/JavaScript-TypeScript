@@ -15,7 +15,6 @@ export class GoBoardService {
   private _goBoard: GoBoard = new GoBoard(this.boardDimension, Array.from({ length: this.boardDimension }, () => Array(this.boardDimension).fill(undefined)));
   private _board: (Stone | undefined)[][] = this._goBoard.board;
   private _boardPreviousState: (Stone | undefined)[][] = this.board.map(row => [...row]); // shallow copy of board state
-  private _gameEnded!: boolean;
 
   constructor() {}
 
@@ -28,7 +27,7 @@ export class GoBoardService {
   }
 
   public isStonePlaceable(row: number, column: number, playerColor: PieceColor): boolean {
-    if (!this._board[row][column] && !this._gameEnded) {
+    if (!this._board[row][column]) {
       const testBoard = this._board.map(row => [...row])
       testBoard[row][column] = new Stone(playerColor); //simulate placement of stone
       const group: Stone[] = this.findGroup(testBoard[row][column], undefined, testBoard);
@@ -156,7 +155,8 @@ export class GoBoardService {
    * @param colorOfLastMove 
    * @returns Group of dead stones removed (for scoring) or undefined if no stone was removed
    */
-  public removeDeadStones(board: (Stone | undefined)[][], colorOfLastMove: PieceColor): Stone[] | undefined {
+  public removeDeadStones(board: (Stone | undefined)[][] | undefined, colorOfLastMove: PieceColor): Stone[] | undefined {
+    if (!board) board = this._board;
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
         if (board[i][j] && board[i][j]!.color !== colorOfLastMove) {

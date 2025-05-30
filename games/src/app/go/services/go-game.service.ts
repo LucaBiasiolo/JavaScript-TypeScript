@@ -6,6 +6,8 @@ import { MoveService } from './move.service';
 import { PieceColor } from '../../PieceColor';
 import { Player } from '../beans/Player';
 import { Move } from '../beans/Move';
+import { Stone } from '../beans/Stone';
+import { GoBoardService } from './go-board.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class GoGameService {
   activePlayer: BehaviorSubject<Player> = new BehaviorSubject<Player>(this.blackPlayer);
   gameEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.blackPlayer.hasPassed && this.whitePlayer.hasPassed);
 
-  constructor(private http: HttpClient, private moveService: MoveService) { }
+  constructor(private http: HttpClient, private moveService: MoveService, private boardService: GoBoardService) { }
 
   loadGames(): Observable<GoGame[]> {
     return this.http.get<GoGame[]>('http://localhost:8080/games-backend/go');
@@ -45,10 +47,12 @@ export class GoGameService {
   }
 
   switchTurn() {
-    if (!this.gameEnded.getValue() && this.activePlayer.getValue().color === PieceColor.BLACK) {
-      this.activePlayer.next(this.whitePlayer);
-    } else {
-      this.activePlayer.next(this.blackPlayer);
+    if (!this.gameEnded.getValue()) {
+      if (this.activePlayer.getValue().color === PieceColor.BLACK) {
+        this.activePlayer.next(this.whitePlayer);
+      } else {
+        this.activePlayer.next(this.blackPlayer);
+      }
     }
   }
 
@@ -66,5 +70,16 @@ export class GoGameService {
     this.gameEnded.next(this.blackPlayer.hasPassed && this.whitePlayer.hasPassed);
     this.moveService.moveLog.push(move)
     this.switchTurn()
+  }
+
+  public afterStonePlaced(row: number, column: number) {
+    let move: Move = new Move(row, column, this.activePlayer.getValue().color, false);
+    this.moveService.moveLog.push(move);
+    this.activePlayer.getValue().hasPassed = false;
+    let stonesRemoved: Stone[] | undefined = this.boardService.removeDeadStones(undefined, this.activePlayer.getValue().color);
+    if (stonesRemoved) {
+      this.updateCaptures(stonesRemoved[0].color, stonesRemoved.length);
+    }
+    this.switchTurn();
   }
 }
